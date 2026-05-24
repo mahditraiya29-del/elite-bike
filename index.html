@@ -2,15 +2,13 @@
 <html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="VéloSport Pro - Boutique moderne de vélos, conseils et choix intelligent selon votre profil." />
-  <title>VéloSport Pro</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#2563eb" />
+  <title>VloSport Pro</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
   <style>
     :root{
       --primary:#2563eb;
@@ -21,16 +19,15 @@
       --text:#0f172a;
       --muted:#64748b;
       --border:#e2e8f0;
-      --shadow:0 14px 40px rgba(15, 23, 42, .10);
-      --shadow-soft:0 8px 20px rgba(15, 23, 42, .08);
+      --shadow:0 14px 40px rgba(15,23,42,.10);
+      --shadow-soft:0 8px 20px rgba(15,23,42,.08);
       --success:#16a34a;
       --warning:#f59e0b;
       --danger:#ef4444;
       --radius:22px;
       --transition:.28s ease;
     }
-
-    [data-theme="dark"]{
+    html[data-theme="dark"]{
       --bg:#0b1220;
       --card:#101a2f;
       --text:#f8fafc;
@@ -39,49 +36,32 @@
       --shadow:0 16px 44px rgba(0,0,0,.30);
       --shadow-soft:0 8px 20px rgba(0,0,0,.20);
     }
-
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
     body{
-      font-family:"Inter",sans-serif;
+      font-family:'Inter',sans-serif;
       background:var(--bg);
       color:var(--text);
       line-height:1.6;
       overflow-x:hidden;
       transition:background var(--transition), color var(--transition);
     }
-
+    body.menu-open{overflow:hidden}
     a{text-decoration:none;color:inherit}
     img{max-width:100%;display:block}
     button,input,select{font:inherit}
-
-    .container{
-      width:min(1240px, calc(100% - 28px));
-      margin-inline:auto;
-    }
-
-    .section{padding:84px 0}
-    .section-title{
-      text-align:center;
-      margin-bottom:34px;
-    }
-    .section-title h2{
-      font-size:clamp(28px,4vw,44px);
-      margin-bottom:10px;
-      font-weight:900;
-    }
-    .section-title p{
-      color:var(--muted);
-      font-size:1.03rem;
-    }
+    .container{width:min(1240px, calc(100% - 20px));margin-inline:auto}
+    .section{padding:72px 0}
+    .section-title{text-align:center;margin-bottom:28px}
+    .section-title h2{font-size:clamp(26px,4vw,42px);margin-bottom:10px;font-weight:900}
+    .section-title p{color:var(--muted);font-size:1rem}
     .accent{color:var(--primary)}
-
     .btn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
       gap:10px;
-      padding:14px 20px;
+      padding:14px 18px;
       border-radius:999px;
       border:1px solid transparent;
       cursor:pointer;
@@ -110,47 +90,41 @@
       position:sticky;
       top:0;
       z-index:1000;
-      background:rgba(255,255,255,.78);
+      background:rgba(255,255,255,.82);
       backdrop-filter:blur(16px);
-      border-bottom:1px solid rgba(226,232,240,.8);
+      border-bottom:1px solid rgba(226,232,240,.85);
     }
-    [data-theme="dark"] .topbar{
-      background:rgba(11,18,32,.82);
-      border-bottom:1px solid var(--border);
+    html[data-theme="dark"] .topbar{
+      background:rgba(11,18,32,.86);
     }
     .nav{
-      min-height:80px;
+      min-height:72px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:18px;
+      gap:12px;
     }
     .logo{
       display:flex;
       align-items:center;
-      gap:12px;
+      gap:10px;
       font-weight:900;
-      font-size:1.3rem;
-      letter-spacing:.2px;
+      font-size:1.15rem;
     }
-    .logo i{
-      font-size:1.6rem;
-      color:var(--primary);
-    }
+    .logo i{font-size:1.4rem;color:var(--primary)}
     .nav-links{
       display:flex;
       align-items:center;
-      gap:24px;
+      gap:22px;
       list-style:none;
     }
     .nav-links a{
       font-weight:700;
-      color:var(--text);
       opacity:.92;
       position:relative;
     }
     .nav-links a::after{
-      content:"";
+      content:'';
       position:absolute;
       bottom:-8px;
       right:0;
@@ -178,89 +152,101 @@
       cursor:pointer;
     }
     .hamburger{display:none}
+    .nav-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(2,6,23,.48);
+      opacity:0;
+      visibility:hidden;
+      transition:.22s ease;
+      z-index:999;
+    }
+    .nav-overlay.show{
+      opacity:1;
+      visibility:visible;
+    }
 
     .hero{
       position:relative;
-      min-height:680px;
+      min-height:640px;
       display:grid;
       align-items:center;
       overflow:hidden;
       color:#fff;
       background:
-        linear-gradient(135deg, rgba(37,99,235,.92), rgba(249,115,22,.88)),
-        url("https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1600&auto=format&fit=crop") center/cover no-repeat;
+        linear-gradient(135deg,rgba(37,99,235,.92),rgba(249,115,22,.88)),
+        url('https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
     }
     .hero::before{
-      content:"";
+      content:'';
       position:absolute;
       inset:0;
-      background:linear-gradient(120deg, rgba(0,0,0,.12), rgba(0,0,0,.18));
+      background:linear-gradient(120deg,rgba(0,0,0,.12),rgba(0,0,0,.18));
     }
     .hero-content{
       position:relative;
       z-index:1;
       display:grid;
-      grid-template-columns:1.08fr .92fr;
-      gap:30px;
+      grid-template-columns:1.05fr .95fr;
+      gap:28px;
       align-items:center;
-      padding:70px 0;
+      padding:66px 0;
     }
     .hero h1{
-      font-size:clamp(34px,5vw,66px);
+      font-size:clamp(32px,5vw,64px);
       line-height:1.02;
       margin-bottom:16px;
       font-weight:900;
     }
     .hero p{
-      font-size:1.08rem;
-      max-width:680px;
+      font-size:1.05rem;
+      max-width:660px;
       opacity:.95;
-      margin-bottom:26px;
+      margin-bottom:24px;
     }
     .hero-actions{
       display:flex;
       flex-wrap:wrap;
-      gap:14px;
-      margin-bottom:20px;
+      gap:12px;
+      margin-bottom:18px;
     }
     .hero-card{
       background:rgba(255,255,255,.14);
       border:1px solid rgba(255,255,255,.24);
       border-radius:28px;
-      padding:24px;
+      padding:22px;
       backdrop-filter:blur(16px);
       box-shadow:0 20px 54px rgba(0,0,0,.16);
     }
     .hero-stats{
-      margin-top:18px;
+      margin-top:16px;
       display:grid;
       grid-template-columns:repeat(2,1fr);
-      gap:14px;
+      gap:12px;
     }
     .stat{
       border-radius:18px;
       background:rgba(255,255,255,.12);
       border:1px solid rgba(255,255,255,.18);
-      padding:16px;
+      padding:14px;
       text-align:center;
     }
-    .stat h3{font-size:1.4rem;margin-bottom:4px}
-    .stat p{opacity:.92;font-size:.95rem}
+    .stat h3{font-size:1.35rem;margin-bottom:4px}
+    .stat p{opacity:.92;font-size:.94rem}
 
     .features-grid,
-    .products-grid,
     .articles-grid,
     .reviews-grid,
     .suggest-grid{
       display:grid;
-      gap:18px;
+      gap:16px;
+      grid-template-columns:repeat(3,1fr);
     }
-    .features-grid{grid-template-columns:repeat(4,1fr)}
-    .products-grid{grid-template-columns:repeat(3,1fr)}
-    .articles-grid{grid-template-columns:repeat(3,1fr)}
-    .reviews-grid{grid-template-columns:repeat(3,1fr)}
-    .suggest-grid{grid-template-columns:repeat(3,1fr)}
-
+    .products-grid{
+      display:grid;
+      gap:12px;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
     .card{
       background:var(--card);
       border:1px solid var(--border);
@@ -270,83 +256,85 @@
       transition:transform var(--transition), box-shadow var(--transition);
     }
     .card:hover{
-      transform:translateY(-6px);
+      transform:translateY(-4px);
       box-shadow:var(--shadow);
     }
-
     .feature{
-      padding:22px;
+      padding:20px;
       text-align:center;
     }
     .feature .ico{
-      width:68px;height:68px;border-radius:50%;
+      width:62px;
+      height:62px;
+      border-radius:50%;
       margin:0 auto 14px;
-      display:grid;place-items:center;
+      display:grid;
+      place-items:center;
       color:#fff;
       background:linear-gradient(135deg,var(--primary),var(--accent));
-      font-size:1.35rem;
+      font-size:1.2rem;
     }
-    .feature h3{margin-bottom:8px}
-    .feature p{color:var(--muted);font-size:.96rem}
 
     .product-media{
       position:relative;
-      height:240px;
+      aspect-ratio:16/10;
       overflow:hidden;
       background:#dbeafe;
     }
     .product-media .main-img{
-      width:100%;height:100%;
+      width:100%;
+      height:100%;
       object-fit:cover;
     }
     .badge{
       position:absolute;
-      top:14px;
-      right:14px;
+      top:12px;
+      right:12px;
       z-index:2;
       background:var(--success);
       color:#fff;
-      padding:7px 12px;
+      padding:6px 10px;
       border-radius:999px;
-      font-size:.8rem;
+      font-size:.78rem;
       font-weight:800;
-      box-shadow:0 10px 20px rgba(0,0,0,.12);
     }
-    .badge.used{background:var(--warning)}
     .thumbs{
       display:flex;
       gap:8px;
-      padding:12px 14px;
+      padding:10px 12px;
       flex-wrap:wrap;
       border-top:1px solid var(--border);
       background:rgba(148,163,184,.04);
     }
     .thumb{
-      width:58px;height:38px;
+      width:54px;
+      height:36px;
       border-radius:10px;
       object-fit:cover;
       cursor:pointer;
       border:2px solid transparent;
-      opacity:.86;
-      transition:transform var(--transition), border-color var(--transition), opacity var(--transition);
+      opacity:.88;
     }
     .thumb.active{
       border-color:var(--primary);
       opacity:1;
-      transform:translateY(-1px);
     }
-
-    .product-body{padding:18px}
-    .product-body h3{font-size:1.14rem;margin-bottom:6px}
+    .product-body{
+      padding:16px;
+    }
+    .product-body h3{
+      font-size:1.08rem;
+      margin-bottom:6px;
+    }
     .price-row{
       display:flex;
       align-items:center;
       gap:10px;
       flex-wrap:wrap;
-      margin:10px 0 12px;
+      margin:8px 0 10px;
     }
     .price{
-      font-size:1.3rem;
+      font-size:1.2rem;
       font-weight:900;
       color:var(--primary);
     }
@@ -358,37 +346,37 @@
       display:flex;
       gap:8px;
       flex-wrap:wrap;
-      margin-bottom:12px;
+      margin-bottom:10px;
       color:var(--muted);
-      font-size:.92rem;
+      font-size:.88rem;
     }
     .meta span{
       display:inline-flex;
       align-items:center;
       gap:6px;
       background:rgba(37,99,235,.07);
-      padding:7px 10px;
+      padding:6px 9px;
       border-radius:999px;
     }
     .stars{color:#f59e0b}
     .specs{
       display:grid;
-      gap:8px;
-      margin:14px 0;
+      gap:7px;
+      margin:12px 0;
       color:var(--muted);
-      font-size:.95rem;
+      font-size:.92rem;
     }
     .specs div{
       display:flex;
       justify-content:space-between;
       gap:10px;
       border-bottom:1px dashed var(--border);
-      padding-bottom:8px;
+      padding-bottom:7px;
     }
     .actions{
       display:flex;
-      gap:10px;
-      margin-top:16px;
+      gap:8px;
+      margin-top:14px;
     }
     .actions .btn{flex:1}
 
@@ -397,12 +385,12 @@
       border:1px solid var(--border);
       border-radius:28px;
       box-shadow:var(--shadow);
-      padding:24px;
+      padding:20px;
     }
     .form-grid{
       display:grid;
       grid-template-columns:repeat(5,1fr);
-      gap:14px;
+      gap:12px;
       align-items:end;
     }
     .field label{
@@ -410,12 +398,12 @@
       margin-bottom:8px;
       font-weight:700;
       color:var(--muted);
-      font-size:.92rem;
+      font-size:.9rem;
     }
     .field input,
     .field select{
       width:100%;
-      padding:14px 14px;
+      padding:13px 14px;
       border-radius:14px;
       border:1px solid var(--border);
       background:transparent;
@@ -427,72 +415,66 @@
       border-color:var(--primary);
       box-shadow:0 0 0 3px rgba(37,99,235,.12);
     }
+
+    .pagination{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:8px;
+      margin-top:22px;
+      align-items:center;
+    }
+    .page-btn{
+      min-width:42px;
+      height:42px;
+      padding:0 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:var(--card);
+      color:var(--text);
+      cursor:pointer;
+      font-weight:800;
+      box-shadow:var(--shadow-soft);
+    }
+    .page-btn.active{
+      background:linear-gradient(135deg,var(--primary),var(--primary-2));
+      color:#fff;
+      border-color:transparent;
+    }
+    .page-ellipsis{
+      padding:0 4px;
+      color:var(--muted);
+      font-weight:900;
+    }
+
     .result-box{
       margin-top:18px;
       border-radius:22px;
-      background:linear-gradient(135deg, rgba(37,99,235,.10), rgba(249,115,22,.08));
+      background:linear-gradient(135deg,rgba(37,99,235,.10),rgba(249,115,22,.08));
       border:1px solid var(--border);
-      padding:20px;
+      padding:18px;
       display:grid;
       gap:10px;
     }
     .result-grid{
       display:grid;
       grid-template-columns:repeat(4,1fr);
-      gap:12px;
-      margin-top:8px;
+      gap:10px;
+      margin-top:6px;
     }
     .mini{
       background:var(--card);
       border:1px solid var(--border);
       border-radius:18px;
-      padding:14px;
+      padding:12px;
       box-shadow:var(--shadow-soft);
     }
     .mini strong{display:block;margin-bottom:4px}
 
-    .article{
-      padding:18px;
-    }
-    .article .tag{
-      display:inline-block;
-      margin-bottom:12px;
-      padding:7px 12px;
-      border-radius:999px;
-      background:rgba(37,99,235,.08);
-      color:var(--primary);
-      font-weight:800;
-      font-size:.82rem;
-    }
-    .article h3{margin-bottom:8px}
-    .article p{color:var(--muted)}
-    .article .read{margin-top:14px;color:var(--primary);font-weight:800}
-
-    .reviews{
-      background:linear-gradient(180deg, transparent, rgba(37,99,235,.05));
-    }
-    .review{
-      padding:22px;
-    }
-    .review-head{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      margin-bottom:12px;
-    }
-    .avatar{
-      width:52px;height:52px;border-radius:50%;
-      display:grid;place-items:center;
-      color:#fff;
-      background:linear-gradient(135deg,var(--primary),var(--accent));
-      font-size:1.15rem;
-    }
-    .review p{color:var(--muted)}
-
     .footer{
       background:#09111f;
       color:#dbe4f3;
-      padding:52px 0 24px;
+      padding:52px 0 22px;
       margin-top:24px;
     }
     .footer-grid{
@@ -503,21 +485,18 @@
     .footer h4{color:#fff;margin-bottom:14px}
     .footer p,.footer li{color:#b9c7db;margin-bottom:10px}
     .footer ul{list-style:none}
-    .footer a:hover{color:#fff}
     .social{
-      display:flex;gap:10px;margin-top:14px
+      display:flex;
+      gap:10px;
+      margin-top:14px;
     }
     .social a{
-      width:42px;height:42px;border-radius:50%;
-      display:grid;place-items:center;
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
       background:rgba(255,255,255,.08);
-    }
-    .footer-bottom{
-      margin-top:28px;
-      padding-top:18px;
-      border-top:1px solid rgba(255,255,255,.08);
-      text-align:center;
-      color:#9fb0cf;
     }
 
     .floating-wa{
@@ -525,9 +504,11 @@
       left:18px;
       bottom:18px;
       z-index:999;
-      width:58px;height:58px;
+      width:58px;
+      height:58px;
       border-radius:50%;
-      display:grid;place-items:center;
+      display:grid;
+      place-items:center;
       background:#25d366;
       color:#fff;
       font-size:1.7rem;
@@ -542,16 +523,16 @@
       align-items:center;
       justify-content:center;
       z-index:2000;
-      padding:18px;
+      padding:14px;
     }
     .modal-backdrop.show{display:flex}
     .modal{
-      width:min(920px,100%);
-      max-height:88vh;
+      width:min(980px,100%);
+      max-height:92vh;
       overflow:auto;
       background:var(--card);
       border:1px solid var(--border);
-      border-radius:28px;
+      border-radius:26px;
       box-shadow:0 24px 60px rgba(0,0,0,.28);
     }
     .modal-header{
@@ -559,55 +540,64 @@
       justify-content:space-between;
       align-items:center;
       gap:14px;
-      padding:18px 20px;
+      padding:16px 18px;
       border-bottom:1px solid var(--border);
     }
-    .modal-title{
-      font-size:1.25rem;
-      font-weight:900;
-    }
+    .modal-title{font-size:1.15rem;font-weight:900}
     .close-btn{
-      width:42px;height:42px;border:none;border-radius:50%;
-      cursor:pointer;background:transparent;color:var(--text);
+      width:42px;
+      height:42px;
+      border:none;
+      border-radius:50%;
+      cursor:pointer;
+      background:transparent;
+      color:var(--text);
       font-size:1.1rem;
     }
-    .modal-body{padding:20px}
+    .modal-body{padding:16px}
     .detail-top{
       display:grid;
       grid-template-columns:1fr 1fr;
-      gap:18px;
-      margin-bottom:18px;
+      gap:16px;
+      margin-bottom:16px;
     }
     .detail-images{
-      border-radius:22px;
+      border-radius:20px;
       overflow:hidden;
       border:1px solid var(--border);
       background:#dbeafe;
     }
     .detail-images .big{
       width:100%;
-      height:320px;
+      aspect-ratio:4/3;
       object-fit:cover;
       display:block;
     }
     .detail-thumbs{
       display:flex;
       gap:8px;
-      padding:12px;
+      padding:10px;
       border-top:1px solid var(--border);
       background:rgba(148,163,184,.05);
       flex-wrap:wrap;
     }
     .detail-thumbs img{
-      width:68px;height:46px;border-radius:10px;object-fit:cover;cursor:pointer;
+      width:64px;
+      height:46px;
+      border-radius:10px;
+      object-fit:cover;
+      cursor:pointer;
       border:2px solid transparent;
       opacity:.9;
     }
-    .detail-thumbs img.active{border-color:var(--primary);opacity:1}
+    .detail-thumbs img.active{
+      border-color:var(--primary);
+      opacity:1;
+    }
     .detail-card{
       border:1px solid var(--border);
-      border-radius:22px;
-      padding:18px;
+      border-radius:20px;
+      padding:16px;
       background:rgba(148,163,184,.04);
     }
     .detail-card h3{margin-bottom:8px}
@@ -629,13 +619,13 @@
     .cols-2{
       display:grid;
       grid-template-columns:1fr 1fr;
-      gap:18px;
-      margin-top:18px;
+      gap:16px;
+      margin-top:16px;
     }
     .box{
       border:1px solid var(--border);
-      border-radius:22px;
-      padding:18px;
+      border-radius:20px;
+      padding:16px;
       background:rgba(148,163,184,.04);
     }
     .box h4{margin-bottom:10px}
@@ -644,16 +634,16 @@
     .compare-table{
       width:100%;
       border-collapse:collapse;
+      border-radius:16px;
       overflow:hidden;
-      border-radius:18px;
-      margin-top:12px;
+      margin-top:10px;
     }
     .compare-table th,
     .compare-table td{
-      padding:12px 10px;
+      padding:10px;
       border-bottom:1px solid var(--border);
       text-align:left;
-      font-size:.95rem;
+      font-size:.92rem;
     }
     .compare-table th{color:var(--muted);font-weight:800}
 
@@ -671,53 +661,73 @@
       display:none;
     }
 
-    @media (max-width: 1100px){
-      .features-grid,.products-grid,.articles-grid,.reviews-grid,.suggest-grid{grid-template-columns:1fr 1fr}
-      .form-grid{grid-template-columns:1fr 1fr}
-      .footer-grid{grid-template-columns:1fr 1fr}
-      .detail-top,.cols-2{grid-template-columns:1fr}
-      .result-grid{grid-template-columns:1fr 1fr}
+    @media (max-width:1100px){
+      .features-grid,.articles-grid,.reviews-grid,.suggest-grid,.products-grid{grid-template-columns:repeat(2,1fr)}
+      .form-grid{grid-template-columns:repeat(2,1fr)}
+      .footer-grid,.detail-top,.cols-2,.result-grid{grid-template-columns:1fr 1fr}
     }
-
-    @media (max-width: 780px){
+    @media (max-width:780px){
+      .hamburger{display:grid}
       .nav-links{
         position:fixed;
-        top:80px;
-        right:-100%;
-        width:min(340px, 92vw);
-        height:calc(100vh - 80px);
+        top:72px;
+        right:0;
+        left:auto;
+        width:min(340px,88vw);
+        height:calc(100vh - 72px);
         background:var(--card);
         flex-direction:column;
         align-items:flex-start;
-        padding:22px;
-        gap:18px;
+        padding:18px;
+        gap:16px;
         border-left:1px solid var(--border);
         box-shadow:var(--shadow);
-        transition:right var(--transition);
+        transform:translateX(105%);
+        transition:transform var(--transition);
+        overflow:auto;
+        -webkit-overflow-scrolling:touch;
       }
-      .nav-links.show{right:0}
-      .hamburger{display:grid}
-      .hero-content{grid-template-columns:1fr;padding:56px 0}
-      .section{padding:64px 0}
-      .features-grid,.products-grid,.articles-grid,.reviews-grid,.suggest-grid,.form-grid,.footer-grid,.result-grid{grid-template-columns:1fr}
-      .hero h1{font-size:2.35rem}
+      .nav-links.show{transform:translateX(0)}
+      .hero-content{grid-template-columns:1fr;padding:46px 0}
+      .hero h1{font-size:2.2rem}
+      .section{padding:60px 0}
+      .features-grid,.articles-grid,.reviews-grid,.suggest-grid,.form-grid,.footer-grid,.detail-top,.cols-2,.result-grid{grid-template-columns:1fr}
+      .products-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+      .product-body{padding:12px}
+      .actions{flex-direction:column}
+      .modal{max-height:94vh}
+      .detail-card{padding:14px}
     }
-
-    @media (max-width: 480px){
-      .container{width:min(100% - 18px,1240px)}
-      .hero h1{font-size:2rem}
-      .hero-actions,.actions{flex-direction:column}
+    @media (max-width:560px){
+      .container{width:min(100% - 14px,1240px)}
+      .hero h1{font-size:1.95rem}
+      .hero-actions{flex-direction:column}
+      .products-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+      .thumb{width:48px;height:32px}
+      .price{font-size:1rem}
+      .product-body h3{font-size:.92rem}
+      .specs,.meta{display:none}
+      .product-media{aspect-ratio:1/1}
+      .page-btn{min-width:38px;height:38px}
+      .modal-body{padding:12px}
+      .detail-thumbs img{width:56px;height:40px}
+    }
+    @media (max-width:390px){
+      .products-grid{gap:6px}
+      .product-body{padding:10px}
+      .product-body .btn{padding:10px 12px;font-size:.85rem}
+      .btn{padding:12px 14px}
+      .nav-links{width:100vw}
     }
   </style>
 </head>
 <body>
-
-  <div class="toast" id="toast">Message copié</div>
+  <div class="toast" id="toastMessage">copied</div>
+  <div class="nav-overlay" id="navOverlay"></div>
 
   <header class="topbar">
     <div class="container nav">
-      <a class="logo" href="#home"><i class="fa-solid fa-bicycle"></i><span>VéloSport <span class="accent">Pro</span></span></a>
-
+      <a class="logo" href="#home"><i class="fa-solid fa-bicycle"></i><span>VloSport <span class="accent">Pro</span></span></a>
       <ul class="nav-links" id="navLinks">
         <li><a href="#home">Accueil</a></li>
         <li><a href="#catalog">Vélos</a></li>
@@ -725,7 +735,6 @@
         <li><a href="#articles">Conseils</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-
       <div class="nav-actions">
         <button class="icon-btn" id="themeToggle" aria-label="Changer le thème"><i class="fa-solid fa-moon"></i></button>
         <button class="icon-btn hamburger" id="menuToggle" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
@@ -742,62 +751,13 @@
           <a href="#catalog" class="btn btn-primary"><i class="fa-solid fa-bicycle"></i> Voir les vélos</a>
           <a href="#smart" class="btn btn-light"><i class="fa-solid fa-wand-magic-sparkles"></i> Trouver mon vélo</a>
         </div>
-        <div class="hero-card">
-          <div class="hero-stats">
-            <div class="stat"><h3>150+</h3><p>Vélos sélectionnés</p></div>
-            <div class="stat"><h3>4.9/5</h3><p>Avis clients</p></div>
-            <div class="stat"><h3>24h</h3><p>Support rapide</p></div>
-            <div class="stat"><h3>FR</h3><p>Interface française</p></div>
-          </div>
-        </div>
       </div>
-
-      <div>
-        <div class="card" style="overflow:hidden">
-          <div class="product-media" style="height:360px">
-            <img class="main-img" src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1200&auto=format&fit=crop" alt="Vélo sportif">
-          </div>
-          <div style="padding:22px">
-            <h3 style="margin-bottom:8px;font-size:1.3rem">Offre du moment</h3>
-            <p style="color:var(--muted);margin-bottom:14px">Vélo de route premium, léger et rapide, idéal pour les longues distances.</p>
-            <div class="price-row">
-              <span class="price">1 290 €</span>
-              <span class="old-price">1 590 €</span>
-            </div>
-            <a href="#catalog" class="btn btn-primary" style="width:100%">Découvrir</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="features">
-    <div class="container">
-      <div class="section-title">
-        <h2>Pourquoi choisir <span class="accent">VéloSport Pro</span></h2>
-        <p>Une expérience claire, rapide et pensée pour le mobile et l’ordinateur</p>
-      </div>
-
-      <div class="features-grid">
-        <div class="card feature">
-          <div class="ico"><i class="fa-solid fa-gauge-high"></i></div>
-          <h3>Rapide</h3>
-          <p>Navigation fluide et interface légère.</p>
-        </div>
-        <div class="card feature">
-          <div class="ico"><i class="fa-solid fa-shield-heart"></i></div>
-          <h3>Fiable</h3>
-          <p>Fiches produits claires et bien structurées.</p>
-        </div>
-        <div class="card feature">
-          <div class="ico"><i class="fa-solid fa-people-group"></i></div>
-          <h3>Avis réels</h3>
-          <p>Retours utilisateurs pour mieux choisir.</p>
-        </div>
-        <div class="card feature">
-          <div class="ico"><i class="fa-solid fa-gear"></i></div>
-          <h3>Complet</h3>
-          <p>Spécifications, conseil, comparaison et plus.</p>
+      <div class="hero-card">
+        <div class="hero-stats">
+          <div class="stat"><h3>150+</h3><p>Vélos sélectionnés</p></div>
+          <div class="stat"><h3>4.95</h3><p>Avis clients</p></div>
+          <div class="stat"><h3>24h</h3><p>Support rapide</p></div>
+          <div class="stat"><h3>FR</h3><p>Interface française</p></div>
         </div>
       </div>
     </div>
@@ -807,107 +767,10 @@
     <div class="container">
       <div class="section-title">
         <h2>Catalogue de <span class="accent">vélos</span></h2>
-        <p>Chaque vélo affiche ses caractéristiques et un bouton Détails complet</p>
+        <p>Chaque vélo affiche ses caractéristiques et un bouton Détails complet.</p>
       </div>
-
-      <div class="products-grid">
-        <article class="card product-card" data-product='{"name":"Aero MTX 29","price":"1 299 €","type":"MTB","size":"M (17\")","speeds":"12 vitesses","brakes":"Hydraulique","state":"Neuf","weight":"13.4 kg","tires":"29 x 2.25","use":"Montagne, sentiers, sport","pros":["Très stable en descente","Suspension confortable","Freinage puissant"],"cons":["Un peu lourd sur route","Prix plus élevé"],"compare":"Plus robuste qu’un vélo de ville, plus confortable qu’un VTT d’entrée de gamme.","suggestions":["Trail Master 27.5","Peak Race 29","Canyon Enduro One"],"rating":"4.8/5","images":["https://images.unsplash.com/photo-1508974239320-0a029497e820?q=80&w=1200&auto=format&fit=crop","https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1200&auto=format&fit=crop","https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=1200&auto=format&fit=crop"]}'>
-          <div class="badge">Neuf</div>
-          <div class="product-media">
-            <img class="main-img" src="https://images.unsplash.com/photo-1508974239320-0a029497e820?q=80&w=1200&auto=format&fit=crop" alt="Aero MTX 29">
-          </div>
-          <div class="thumbs">
-            <img class="thumb active" src="https://images.unsplash.com/photo-1508974239320-0a029497e820?q=80&w=400&auto=format&fit=crop" alt="">
-            <img class="thumb" src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=400&auto=format&fit=crop" alt="">
-            <img class="thumb" src="https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=400&auto=format&fit=crop" alt="">
-          </div>
-          <div class="product-body">
-            <h3>Aero MTX 29</h3>
-            <div class="price-row"><span class="price">1 299 €</span><span class="old-price">1 599 €</span></div>
-            <div class="meta">
-              <span><i class="fa-solid fa-bicycle"></i> MTB</span>
-              <span><i class="fa-solid fa-star stars"></i> 4.8</span>
-            </div>
-            <div class="specs">
-              <div><span>Taille</span><strong>M (17")</strong></div>
-              <div><span>Vitesses</span><strong>12</strong></div>
-              <div><span>Freins</span><strong>Hydraulique</strong></div>
-              <div><span>État</span><strong>Neuf</strong></div>
-            </div>
-            <div class="actions">
-              <a href="#contact" class="btn btn-primary"><i class="fa-brands fa-whatsapp"></i> Acheter</a>
-              <button class="btn btn-outline details-btn">Détails</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="card product-card" data-product='{"name":"Road Carbon S","price":"1 890 €","type":"Route","size":"L (56 cm)","speeds":"22 vitesses","brakes":"Hydraulique","state":"Neuf","weight":"8.9 kg","tires":"700 x 28C","use":"Vitesse, route, longue distance","pros":["Très léger","Excellent rendement","Position sportive"],"cons":["Moins confortable sur chemins","Prix premium"],"compare":"Plus rapide qu’un vélo ville, plus léger qu’un vélo polyvalent.","suggestions":["Road Lite 56","Speed Pro R","Endurance FR 54"],"rating":"4.9/5","images":["https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop","https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1200&auto=format&fit=crop","https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1200&auto=format&fit=crop"]}'>
-          <div class="badge">Neuf</div>
-          <div class="product-media">
-            <img class="main-img" src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop" alt="Road Carbon S">
-          </div>
-          <div class="thumbs">
-            <img class="thumb active" src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=400&auto=format&fit=crop" alt="">
-            <img class="thumb" src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=400&auto=format&fit=crop" alt="">
-            <img class="thumb" src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=400&auto=format&fit=crop" alt="">
-          </div>
-          <div class="product-body">
-            <h3>Road Carbon S</h3>
-            <div class="price-row"><span class="price">1 890 €</span><span class="old-price">2 250 €</span></div>
-            <div class="meta">
-              <span><i class="fa-solid fa-bicycle"></i> Route</span>
-              <span><i class="fa-solid fa-star stars"></i> 4.9</span>
-            </div>
-            <div class="specs">
-              <div><span>Taille</span><strong>L (56 cm)</strong></div>
-              <div><span>Vitesses</span><strong>22</strong></div>
-              <div><span>Freins</span><strong>Hydraulique</strong></div>
-              <div><span>État</span><strong>Neuf</strong></div>
-            </div>
-            <div class="actions">
-              <a href="#contact" class="btn btn-primary"><i class="fa-brands fa-whatsapp"></i> Acheter</a>
-              <button class="btn btn-outline details-btn">Détails</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="card product-card" data-product='{"name":"City Comfort 7","price":"699 €","type":"Ville","size":"M","speeds":"7 vitesses","brakes":"Mécanique","state":"Neuf","weight":"14.8 kg","tires":"700 x 38C","use":"Ville, trajets quotidiens, loisirs","pros":["Confort très bon","Position droite","Facile à utiliser"],"cons":["Moins rapide qu’un vélo route","Moins léger"],"compare":"Idéal pour la ville, plus confortable qu’un vélo de route.","suggestions":["Urban Ride 7","Town Easy","Daily Commuter"],"rating":"4.7/5","images":["https://images.unsplash.com/photo-1525104885119-87e3f3c4a0a0?q=80&w=1200&auto=format&fit=crop","https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1200&auto=format&fit=crop","https://images.unsplash.com/photo-1511994298241-608e28f14fde?q=80&w=1200&auto=format&fit=crop"]}'>
-          <div class="badge">Neuf</div>
-          <div class="product-media">
-            <img class="main-img" src="https://images.unsplash.com/photo-1525104885119-87e3f3c4a0a0?q=80&w=1200&auto=format&fit=crop" alt="City Comfort 7">
-          </div>
-          <div class="thumbs">
-            <img class="thumb active" src="https://images.unsplash.com/photo-1525104885119-87e3f3c4a0a0?q=80&w=400&auto=format&fit=crop" alt="">
-            <img class="thumb" src="https://images.unsplash.com/photo-1511994298241-608e28f14fde?q=80&w=400&auto=format&fit=crop" alt="">
-            <img class="thumb" src="https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?q=80&w=400&auto=format&fit=crop" alt="">
-          </div>
-          <div class="product-body">
-            <h3>City Comfort 7</h3>
-            <div class="price-row"><span class="price">699 €</span><span class="old-price">849 €</span></div>
-            <div class="meta">
-              <span><i class="fa-solid fa-bicycle"></i> Ville</span>
-              <span><i class="fa-solid fa-star stars"></i> 4.7</span>
-            </div>
-            <div class="specs">
-              <div><span>Taille</span><strong>M</strong></div>
-              <div><span>Vitesses</span><strong>7</strong></div>
-              <div><span>Freins</span><strong>Mécanique</strong></div>
-              <div><span>État</span><strong>Neuf</strong></div>
-            </div>
-            <div class="actions">
-              <a href="#contact" class="btn btn-primary"><i class="fa-brands fa-whatsapp"></i> Acheter</a>
-              <button class="btn btn-outline details-btn">Détails</button>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      <div style="margin-top:18px" class="card">
-        <div style="padding:22px">
-          <h3 style="margin-bottom:6px">Avis des utilisateurs</h3>
-          <p style="color:var(--muted)">Les utilisateurs peuvent voir les notes, les retours et choisir plus facilement le vélo adapté à leur usage.</p>
-        </div>
-      </div>
+      <div class="products-grid" id="productsGrid"></div>
+      <div class="pagination" id="pagination"></div>
     </div>
   </section>
 
@@ -915,17 +778,16 @@
     <div class="container">
       <div class="section-title">
         <h2>Choix <span class="accent">intelligent</span></h2>
-        <p>Indiquez votre profil et recevez une recommandation automatique</p>
+        <p>Indiquez votre profil et recevez une recommandation automatique.</p>
       </div>
-
       <div class="smart-form">
         <div class="form-grid">
           <div class="field">
-            <label for="height">Taille (cm)</label>
+            <label for="height">Taille cm</label>
             <input id="height" type="number" placeholder="ex: 175">
           </div>
           <div class="field">
-            <label for="weight">Poids (kg)</label>
+            <label for="weight">Poids kg</label>
             <input id="weight" type="number" placeholder="ex: 72">
           </div>
           <div class="field">
@@ -933,7 +795,7 @@
             <input id="age" type="number" placeholder="ex: 29">
           </div>
           <div class="field">
-            <label for="useType">Type d'utilisation</label>
+            <label for="useType">Type d’utilisation</label>
             <select id="useType">
               <option value="Ville">La ville</option>
               <option value="Montagne">Les montagnes</option>
@@ -946,7 +808,6 @@
             <button class="btn btn-primary" id="recommendBtn" style="width:100%"><i class="fa-solid fa-wand-magic-sparkles"></i> Recommander</button>
           </div>
         </div>
-
         <div class="result-box" id="resultBox">
           <strong>Résultat de recommandation</strong>
           <div id="resultText" style="color:var(--muted)">Remplissez les informations pour obtenir un vélo conseillé automatiquement.</div>
@@ -961,172 +822,58 @@
     </div>
   </section>
 
-  <section class="section" id="suggestions">
-    <div class="container">
-      <div class="section-title">
-        <h2>Suggestions de <span class="accent">vélos proches</span></h2>
-        <p>Des modèles similaires pour comparer facilement</p>
-      </div>
-
-      <div class="suggest-grid">
-        <div class="card feature">
-          <div class="ico"><i class="fa-solid fa-mountain"></i></div>
-          <h3>Trail Master 27.5</h3>
-          <p>Bon équilibre entre confort et maniabilité.</p>
-        </div>
-        <div class="card feature">
-          <div class="ico"><i class="fa-solid fa-road"></i></div>
-          <h3>Road Lite 56</h3>
-          <p>Version légère pour la route et la vitesse.</p>
-        </div>
-        <div class="card feature">
-          <div class="ico"><i class="fa-solid fa-city"></i></div>
-          <h3>Urban Ride 7</h3>
-          <p>Idéal pour les déplacements quotidiens.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section reviews">
-    <div class="container">
-      <div class="section-title">
-        <h2>Avis <span class="accent">clients</span></h2>
-        <p>Des retours qui aident à choisir le bon vélo</p>
-      </div>
-
-      <div class="reviews-grid">
-        <div class="card review">
-          <div class="review-head">
-            <div class="avatar"><i class="fa-solid fa-user"></i></div>
-            <div>
-              <strong>Lucas</strong>
-              <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-            </div>
-          </div>
-          <p>Très beau site, rapide, et les détails produits sont vraiment complets.</p>
-        </div>
-        <div class="card review">
-          <div class="review-head">
-            <div class="avatar"><i class="fa-solid fa-user"></i></div>
-            <div>
-              <strong>Sofia</strong>
-              <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
-            </div>
-          </div>
-          <p>Le système de recommandation est pratique pour choisir selon la taille et l’usage.</p>
-        </div>
-        <div class="card review">
-          <div class="review-head">
-            <div class="avatar"><i class="fa-solid fa-user"></i></div>
-            <div>
-              <strong>Mathieu</strong>
-              <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-            </div>
-          </div>
-          <p>Design moderne et parfait sur téléphone. Le bouton Détails fonctionne très bien.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="section" id="articles">
     <div class="container">
       <div class="section-title">
-        <h2>Articles & <span class="accent">Conseils</span></h2>
-        <p>Des articles en français pour garder votre vélo en bon état</p>
+        <h2>Articles <span class="accent">Conseils</span></h2>
+        <p>Des articles en français pour garder votre vélo en bon état.</p>
       </div>
-
       <div class="articles-grid">
-        <article class="card article">
-          <span class="tag">Entretien</span>
-          <h3>Comment garder son vélo en bon état</h3>
-          <p>Nettoyez régulièrement le cadre, contrôlez les vis et vérifiez l’état général du vélo chaque semaine.</p>
-          <div class="read">Lire l’article</div>
-        </article>
-        <article class="card article">
-          <span class="tag">Chaîne</span>
-          <h3>Nettoyage de la chaîne</h3>
-          <p>Décrassez la transmission, utilisez un dégraissant adapté et séchez bien avant de lubrifier.</p>
-          <div class="read">Lire l’article</div>
-        </article>
-        <article class="card article">
-          <span class="tag">Lubrification</span>
-          <h3>Bien lubrifier son vélo</h3>
-          <p>Appliquez une petite quantité de lubrifiant sur la chaîne propre, puis retirez l’excès avec un chiffon.</p>
-          <div class="read">Lire l’article</div>
-        </article>
-        <article class="card article">
-          <span class="tag">Freins</span>
-          <h3>Protéger ses freins</h3>
-          <p>Surveillez l’usure des plaquettes, gardez les disques propres et évitez les produits gras sur la zone de freinage.</p>
-          <div class="read">Lire l’article</div>
-        </article>
-        <article class="card article">
-          <span class="tag">Taille</span>
-          <h3>Choisir la bonne taille</h3>
-          <p>La taille dépend surtout de votre taille corporelle et de votre style d’usage. Un cadre adapté améliore le confort.</p>
-          <div class="read">Lire l’article</div>
-        </article>
-        <article class="card article">
-          <span class="tag">Débutants</span>
-          <h3>Conseils pour débutants</h3>
-          <p>Commencez par un vélo simple, portez un casque et testez la position avant un long trajet.</p>
-          <div class="read">Lire l’article</div>
-        </article>
+        <div class="card feature"><div class="ico"><i class="fa-solid fa-screwdriver-wrench"></i></div><h3>Entretien</h3><p>Nettoyez régulièrement le cadre et vérifiez les vis.</p></div>
+        <div class="card feature"><div class="ico"><i class="fa-solid fa-link"></i></div><h3>Chaîne</h3><p>Dégraissez puis lubrifiez pour garder une transmission fluide.</p></div>
+        <div class="card feature"><div class="ico"><i class="fa-solid fa-brake-warning"></i></div><h3>Freins</h3><p>Surveillez l’usure et gardez les disques propres.</p></div>
       </div>
     </div>
   </section>
 
-  <footer class="footer" id="contact">
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="section-title">
+        <h2>Contact</h2>
+        <p>Retrouvez-nous via les réseaux sociaux et WhatsApp.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
     <div class="container">
       <div class="footer-grid">
         <div>
-          <h4>VéloSport Pro</h4>
-          <p>Une boutique moderne pensée pour les passionnés de vélo, avec une interface élégante et intuitive.</p>
+          <h4>VloSport Pro</h4>
+          <p>Une boutique moderne pensée pour les passionnés de vélo.</p>
           <div class="social">
-            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://wa.me/33123456789" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
           </div>
         </div>
         <div>
           <h4>Navigation</h4>
-          <ul>
-            <li><a href="#home">Accueil</a></li>
-            <li><a href="#catalog">Vélos</a></li>
-            <li><a href="#smart">Choix intelligent</a></li>
-            <li><a href="#articles">Articles</a></li>
-          </ul>
+          <ul><li>Accueil</li><li>Vélos</li><li>Choix intelligent</li><li>Conseils</li></ul>
         </div>
         <div>
           <h4>Services</h4>
-          <ul>
-            <li>Vente de vélos</li>
-            <li>Conseil personnalisé</li>
-            <li>Comparaison de modèles</li>
-            <li>Support rapide</li>
-          </ul>
+          <ul><li>Vente de vélos</li><li>Conseil personnalisé</li><li>Comparaison de modèles</li></ul>
         </div>
         <div>
           <h4>Contact</h4>
-          <ul>
-            <li><i class="fa-solid fa-location-dot"></i> Paris, France</li>
-            <li><i class="fa-solid fa-phone"></i> +33 1 23 45 67 89</li>
-            <li><i class="fa-solid fa-envelope"></i> contact@velosportpro.fr</li>
-          </ul>
+          <ul><li>Paris, France</li><li>+33 1 23 45 67 89</li><li>contact@velosportpro.fr</li></ul>
         </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2026 VéloSport Pro. Tous droits réservés.</p>
       </div>
     </div>
   </footer>
 
-  <a class="floating-wa" href="https://wa.me/33123456789" target="_blank" aria-label="WhatsApp">
-    <i class="fa-brands fa-whatsapp"></i>
-  </a>
+  <a class="floating-wa" href="https://wa.me/33123456789" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
 
   <div class="modal-backdrop" id="detailsModal">
     <div class="modal" role="dialog" aria-modal="true">
@@ -1139,220 +886,249 @@
   </div>
 
   <script>
-    const themeToggle = document.getElementById('themeToggle');
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
-    const toast = document.getElementById('toast');
-    const modal = document.getElementById('detailsModal');
-    const modalBody = document.getElementById('modalBody');
-    const modalTitle = document.getElementById('modalTitle');
-    const closeModal = document.getElementById('closeModal');
+    const themeToggle=document.getElementById('themeToggle');
+    const menuToggle=document.getElementById('menuToggle');
+    const navLinks=document.getElementById('navLinks');
+    const navOverlay=document.getElementById('navOverlay');
+    const toast=document.getElementById('toastMessage');
+    const modal=document.getElementById('detailsModal');
+    const modalBody=document.getElementById('modalBody');
+    const modalTitle=document.getElementById('modalTitle');
+    const closeModal=document.getElementById('closeModal');
 
-    themeToggle.addEventListener('click', () => {
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-      themeToggle.innerHTML = isDark ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
-      localStorage.setItem('theme', isDark ? 'light' : 'dark');
-    });
+    const products=[
+      {name:'Aero MTX 29',price:'1 299',oldPrice:'1 599',type:'MTB',size:'M 17',speeds:'12 vitesses',brakes:'Hydraulique',state:'Neuf',weight:'13.4 kg',tires:'29 x 2.25',use:'Montagne, sentiers, sport',rating:'4.8',images:['https://images.unsplash.com/photo-1508974239320-0a029497e820?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=1200&auto=format&fit=crop'],pros:['Très stable en descente','Suspension confortable','Freinage puissant'],cons:['Un peu lourd sur route','Prix plus élevé'],compare:'Plus robuste qu’un vélo de ville.',suggestions:['Trail Master 27.5','Peak Race 29'],badge:'Neuf'},
+      {name:'Road Carbon S',price:'1 890',oldPrice:'2 250',type:'Route',size:'L 56 cm',speeds:'22 vitesses',brakes:'Hydraulique',state:'Neuf',weight:'8.9 kg',tires:'700 x 28C',use:'Vitesse, route, longue distance',rating:'4.9',images:['https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1200&auto=format&fit=crop'],pros:['Très léger','Excellent rendement','Position sportive'],cons:['Moins confortable sur chemins','Prix premium'],compare:'Plus rapide qu’un vélo ville.',suggestions:['Road Lite 56','Endurance FR 54'],badge:'Neuf'},
+      {name:'City Comfort 7',price:'699',oldPrice:'849',type:'Ville',size:'M',speeds:'7 vitesses',brakes:'Mécanique',state:'Neuf',weight:'14.8 kg',tires:'700 x 38C',use:'Ville, trajets quotidiens, loisirs',rating:'4.7',images:['https://images.unsplash.com/photo-1525104885119-87e3f3c4a0a0?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1511994298241-608e28f14fde?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?q=80&w=1200&auto=format&fit=crop'],pros:['Confort très bon','Position droite','Facile à utiliser'],cons:['Moins rapide','Plus lourd'],compare:'Idéal pour la ville.',suggestions:['Urban Ride 7','Town Easy'],badge:'Neuf'},
+      {name:'Urban Lite',price:'549',oldPrice:'649',type:'Ville',size:'S',speeds:'6 vitesses',brakes:'Mécanique',state:'Occasion',weight:'13.6 kg',tires:'700 x 35C',use:'Ville, promenade',rating:'4.6',images:['https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=1200&auto=format&fit=crop'],pros:['Prix accessible','Position confortable','Usage simple'],cons:['Moins sportif','Moins rapide'],compare:'Bon choix pour débuter.',suggestions:['City Comfort 7','Town Easy'],badge:'Occasion'},
+      {name:'Trail Master 27.5',price:'1 099',oldPrice:'1 299',type:'MTB',size:'L 19',speeds:'10 vitesses',brakes:'Hydraulique',state:'Neuf',weight:'14.2 kg',tires:'27.5 x 2.25',use:'Montagne, chemins',rating:'4.8',images:['https://images.unsplash.com/photo-1508974239320-0a029497e820?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1200&auto=format&fit=crop'],pros:['Très maniable','Bon confort','Freinage solide'],cons:['Moins rapide sur route','Plus bruyant'],compare:'Polyvalent et stable.',suggestions:['Aero MTX 29','Peak Race 29'],badge:'Neuf'},
+      {name:'Speed Pro R',price:'1 550',oldPrice:'1 790',type:'Route',size:'M 54',speeds:'20 vitesses',brakes:'Hydraulique',state:'Neuf',weight:'9.4 kg',tires:'700 x 25C',use:'Vitesse, entraînement',rating:'4.9',images:['https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1200&auto=format&fit=crop'],pros:['Léger','Rapide','Excellente rigidité'],cons:['Moins confort','Prix élevé'],compare:'Pour les sorties rapides.',suggestions:['Road Carbon S','Road Lite 56'],badge:'Neuf'}
+    ];
 
-    const savedTheme = localStorage.getItem('theme');
-    if(savedTheme){
-      document.documentElement.setAttribute('data-theme', savedTheme);
-      themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
-    }
-
-    menuToggle.addEventListener('click', () => navLinks.classList.toggle('show'));
+    const perPage=6;
+    let currentPage=1;
 
     function showToast(msg){
-      toast.textContent = msg;
-      toast.style.display = 'block';
+      toast.textContent=msg;
+      toast.style.display='block';
       clearTimeout(window.toastTimer);
-      window.toastTimer = setTimeout(() => toast.style.display = 'none', 2400);
+      window.toastTimer=setTimeout(()=>toast.style.display='none',2200);
     }
 
-    function copyText(text){
-      if(navigator.clipboard && window.isSecureContext){
-        return navigator.clipboard.writeText(text);
-      }
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.left = '-9999px';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      ta.remove();
-      return Promise.resolve();
+    function setMenu(open){
+      navLinks.classList.toggle('show',open);
+      navOverlay.classList.toggle('show',open);
+      document.body.classList.toggle('menu-open',open);
+      menuToggle.setAttribute('aria-expanded',open?'true':'false');
     }
+    function closeMenu(){setMenu(false)}
 
-    document.querySelectorAll('.product-card').forEach(card => {
-      const mainImg = card.querySelector('.main-img');
-      const thumbs = card.querySelectorAll('.thumb');
-      thumbs.forEach(thumb => {
-        thumb.addEventListener('click', () => {
-          thumbs.forEach(t => t.classList.remove('active'));
-          thumb.classList.add('active');
-          mainImg.src = thumb.src.replace('w=400', 'w=1200');
-        });
-      });
+    menuToggle?.addEventListener('click',()=>setMenu(!navLinks.classList.contains('show')));
+    navOverlay.addEventListener('click',closeMenu);
+    navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
 
-      card.querySelector('.details-btn').addEventListener('click', async () => {
-        const data = JSON.parse(card.dataset.product);
-        modalTitle.textContent = data.name;
-
-        modalBody.innerHTML = `
-          <div class="detail-top">
-            <div class="detail-images">
-              <img class="big" id="detailMainImg" src="${data.images[0]}" alt="${data.name}">
-              <div class="detail-thumbs" id="detailThumbs">
-                ${data.images.map((src, i) => `<img class="${i===0?'active':''}" src="${src}" alt="">`).join('')}
-              </div>
-            </div>
-
-            <div class="detail-card">
-              <h3>${data.name}</h3>
-              <div class="price-row">
-                <span class="price">${data.price}</span>
-                <span class="old-price">${parseInt(data.price.replace(/\\D/g,''),10) ? 'Prix conseillé' : ''}</span>
-              </div>
-              <p>${data.compare}</p>
-
-              <div class="info-list">
-                <div class="info-item"><span>Type</span><strong>${data.type}</strong></div>
-                <div class="info-item"><span>Taille</span><strong>${data.size}</strong></div>
-                <div class="info-item"><span>Vitesses</span><strong>${data.speeds}</strong></div>
-                <div class="info-item"><span>Freins</span><strong>${data.brakes}</strong></div>
-                <div class="info-item"><span>État</span><strong>${data.state}</strong></div>
-                <div class="info-item"><span>Poids approximatif</span><strong>${data.weight}</strong></div>
-                <div class="info-item"><span>Pneus</span><strong>${data.tires}</strong></div>
-                <div class="info-item"><span>Utilisation idéale</span><strong>${data.use}</strong></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="cols-2">
-            <div class="box">
-              <h4>Avantages</h4>
-              <ul>${data.pros.map(x => `<li>${x}</li>`).join('')}</ul>
-            </div>
-            <div class="box">
-              <h4>Inconvénients</h4>
-              <ul>${data.cons.map(x => `<li>${x}</li>`).join('')}</ul>
-            </div>
-          </div>
-
-          <div class="cols-2">
-            <div class="box">
-              <h4>Comparaison rapide</h4>
-              <p style="color:var(--muted)">${data.compare}</p>
-              <table class="compare-table">
-                <tr><th>Critère</th><th>Ce modèle</th><th>Proche</th></tr>
-                <tr><td>Poids</td><td>${data.weight}</td><td>Variable</td></tr>
-                <tr><td>Confort</td><td>Bon</td><td>Moyen à bon</td></tr>
-                <tr><td>Usage</td><td>${data.use}</td><td>Similaire</td></tr>
-                <tr><td>Freins</td><td>${data.brakes}</td><td>Hydraulique / Mécanique</td></tr>
-              </table>
-            </div>
-
-            <div class="box">
-              <h4>Vélos proches</h4>
-              <ul>${data.suggestions.map(x => `<li>${x}</li>`).join('')}</ul>
-              <h4 style="margin-top:14px">Type de système</h4>
-              <p style="color:var(--muted)">Système de vitesses: ${data.speeds} — Freinage: ${data.brakes === 'Hydraulique' ? 'Hydraulique' : 'Mécanique'}.</p>
-            </div>
-          </div>
-        `;
-
-        modal.classList.add('show');
-
-        const detailMainImg = document.getElementById('detailMainImg');
-        const detailThumbs = document.getElementById('detailThumbs').querySelectorAll('img');
-
-        detailThumbs.forEach((t, i) => {
-          t.addEventListener('click', () => {
-            detailThumbs.forEach(x => x.classList.remove('active'));
-            t.classList.add('active');
-            detailMainImg.src = data.images[i];
-          });
-        });
-      });
+    const savedTheme=localStorage.getItem('theme');
+    if(savedTheme)document.documentElement.setAttribute('data-theme',savedTheme);
+    themeToggle.innerHTML=document.documentElement.getAttribute('data-theme')==='dark'
+      ?'<i class="fa-solid fa-sun"></i>'
+      :'<i class="fa-solid fa-moon"></i>';
+    themeToggle.addEventListener('click',()=>{
+      const dark=document.documentElement.getAttribute('data-theme')==='dark';
+      document.documentElement.setAttribute('data-theme',dark?'light':'dark');
+      localStorage.setItem('theme',dark?'light':'dark');
+      themeToggle.innerHTML=dark?'<i class="fa-solid fa-moon"></i>':'<i class="fa-solid fa-sun"></i>';
     });
+
+    function renderPagination(total){
+      const pages=Math.ceil(total/perPage);
+      const el=document.getElementById('pagination');
+      if(pages<=1){el.innerHTML='';return}
+      const range=[];
+      const left=Math.max(2,currentPage-1);
+      const right=Math.min(pages-1,currentPage+1);
+      range.push(1);
+      if(left>2)range.push('...');
+      for(let i=left;i<=right;i++)range.push(i);
+      if(right<pages-1)range.push('...');
+      range.push(pages);
+      el.innerHTML='';
+      const prev=document.createElement('button');
+      prev.className='page-btn';
+      prev.textContent='‹';
+      prev.disabled=currentPage===1;
+      prev.onclick=()=>{if(currentPage>1){currentPage--;renderProducts();window.scrollTo({top:document.getElementById('catalog').offsetTop-70,behavior:'smooth'})}};
+      el.appendChild(prev);
+      range.forEach(item=>{
+        if(item==='...'){
+          const s=document.createElement('span');
+          s.className='page-ellipsis';
+          s.textContent='...';
+          el.appendChild(s);
+        }else{
+          const b=document.createElement('button');
+          b.className='page-btn'+(item===currentPage?' active':'');
+          b.textContent=item;
+          b.onclick=()=>{currentPage=item;renderProducts();window.scrollTo({top:document.getElementById('catalog').offsetTop-70,behavior:'smooth'})};
+          el.appendChild(b);
+        }
+      });
+      const next=document.createElement('button');
+      next.className='page-btn';
+      next.textContent='›';
+      next.disabled=currentPage===pages;
+      next.onclick=()=>{if(currentPage<pages){currentPage++;renderProducts();window.scrollTo({top:document.getElementById('catalog').offsetTop-70,behavior:'smooth'})}};
+      el.appendChild(next);
+    }
+
+    function renderProducts(){
+      const grid=document.getElementById('productsGrid');
+      const start=(currentPage-1)*perPage;
+      const chunk=products.slice(start,start+perPage);
+      grid.innerHTML=chunk.map((p,idx)=>`
+        <article class="card product-card" data-index="${start+idx}">
+          <div class="badge">${p.badge}</div>
+          <div class="product-media">
+            <img class="main-img" src="${p.images[0]}" alt="${p.name}">
+          </div>
+          <div class="thumbs">
+            ${p.images.map((src,i)=>`<img class="thumb ${i===0?'active':''}" src="${src}" alt="${p.name} ${i+1}">`).join('')}
+          </div>
+          <div class="product-body">
+            <h3>${p.name}</h3>
+            <div class="price-row"><span class="price">${p.price} €</span><span class="old-price">${p.oldPrice} €</span></div>
+            <div class="meta">
+              <span><i class="fa-solid fa-bicycle"></i>${p.type}</span>
+              <span class="stars"><i class="fa-solid fa-star"></i> ${p.rating}</span>
+            </div>
+            <div class="specs">
+              <div><span>Taille</span><strong>${p.size}</strong></div>
+              <div><span>Vitesses</span><strong>${p.speeds}</strong></div>
+              <div><span>Freins</span><strong>${p.brakes}</strong></div>
+              <div><span>État</span><strong>${p.state}</strong></div>
+            </div>
+            <div class="actions">
+              <a href="#contact" class="btn btn-primary"><i class="fa-brands fa-whatsapp"></i> Acheter</a>
+              <button class="btn btn-outline details-btn">Détails</button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+      grid.querySelectorAll('.thumb').forEach(img=>img.addEventListener('click',e=>{
+        const card=e.target.closest('.product-card');
+        card.querySelector('.main-img').src=e.target.src;
+        card.querySelectorAll('.thumb').forEach(x=>x.classList.remove('active'));
+        e.target.classList.add('active');
+      }));
+      grid.querySelectorAll('.details-btn').forEach(btn=>btn.addEventListener('click',()=>openDetails(products[Number(btn.closest('.product-card').dataset.index)])));
+      renderPagination(products.length);
+    }
+
+    function openDetails(data){
+      modalTitle.textContent=data.name;
+      modalBody.innerHTML=`
+        <div class="detail-top">
+          <div class="detail-images">
+            <img class="big" id="detailMainImg" src="${data.images[0]}" alt="${data.name}">
+            <div class="detail-thumbs" id="detailThumbs">
+              ${data.images.map((src,i)=>`<img class="${i===0?'active':''}" src="${src}" alt="${data.name} ${i+1}">`).join('')}
+            </div>
+          </div>
+          <div class="detail-card">
+            <h3>${data.name}</h3>
+            <div class="price-row"><span class="price">${data.price} €</span><span class="old-price">${data.oldPrice} €</span></div>
+            <p>${data.compare}</p>
+            <div class="info-list">
+              <div class="info-item"><span>Type</span><strong>${data.type}</strong></div>
+              <div class="info-item"><span>Taille</span><strong>${data.size}</strong></div>
+              <div class="info-item"><span>Vitesses</span><strong>${data.speeds}</strong></div>
+              <div class="info-item"><span>Freins</span><strong>${data.brakes}</strong></div>
+              <div class="info-item"><span>État</span><strong>${data.state}</strong></div>
+              <div class="info-item"><span>Poids</span><strong>${data.weight}</strong></div>
+              <div class="info-item"><span>Pneus</span><strong>${data.tires}</strong></div>
+              <div class="info-item"><span>Utilisation idéale</span><strong>${data.use}</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="cols-2">
+          <div class="box"><h4>Avantages</h4><ul>${data.pros.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+          <div class="box"><h4>Inconvénients</h4><ul>${data.cons.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+        </div>
+        <div class="cols-2">
+          <div class="box"><h4>Comparaison rapide</h4><p style="color:var(--muted)">${data.compare}</p></div>
+          <div class="box"><h4>Vélos proches</h4><ul>${data.suggestions.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+        </div>
+      `;
+      modal.classList.add('show');
+      document.body.classList.add('menu-open');
+      const imgs=modal.querySelectorAll('#detailThumbs img');
+      const main=modal.querySelector('#detailMainImg');
+      imgs.forEach((img,i)=>img.addEventListener('click',()=>{
+        imgs.forEach(x=>x.classList.remove('active'));
+        img.classList.add('active');
+        main.src=data.images[i];
+      }));
+    }
 
     function closeDetails(){
       modal.classList.remove('show');
+      document.body.classList.remove('menu-open');
     }
+    closeModal.addEventListener('click',closeDetails);
+    modal.addEventListener('click',e=>{if(e.target===modal)closeDetails()});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetails()});
 
-    closeModal.addEventListener('click', closeDetails);
-    modal.addEventListener('click', e => { if(e.target === modal) closeDetails(); });
-    document.addEventListener('keydown', e => { if(e.key === 'Escape') closeDetails(); });
-
-    function sizeFromHeight(h, type){
-      if(type === 'Route'){
-        if(h < 155) return 'XXS (44-46 cm)';
-        if(h < 165) return 'XS (47-49 cm)';
-        if(h < 170) return 'S (50-52 cm)';
-        if(h < 180) return 'M (53-55 cm)';
-        if(h < 188) return 'L (56-58 cm)';
-        return 'XL (59-61 cm)';
+    function sizeFromHeight(h,t){
+      if(t==='Route'){
+        if(h<155)return'XXS 44-46 cm';
+        if(h<165)return'XS 47-49 cm';
+        if(h<170)return'S 50-52 cm';
+        if(h<180)return'M 53-55 cm';
+        if(h<188)return'L 56-58 cm';
+        return'XL 59-61 cm';
       }
-      if(type === 'MTB'){
-        if(h < 155) return 'XS (13-14\")';
-        if(h < 165) return 'S (15-16\")';
-        if(h < 175) return 'M (17-18\")';
-        if(h < 185) return 'L (19-20\")';
-        return 'XL (21-22\")';
+      if(t==='MTB'){
+        if(h<155)return'XS 13-14';
+        if(h<165)return'S 15-16';
+        if(h<175)return'M 17-18';
+        if(h<185)return'L 19-20';
+        return'XL 21-22';
       }
-      return h < 165 ? 'S' : h < 180 ? 'M' : 'L';
+      return h<165?'S':h<180?'M':'L';
     }
-
-    function wheelFromType(type){
-      if(type === 'Route') return '700C';
-      if(type === 'MTB') return '27.5\" ou 29\"';
-      if(type === 'Ville') return '28\"';
-      if(type === 'BMX') return '20\"';
-      return '28\"';
+    function wheelFromType(t){
+      return t==='Route'?'700C':t==='MTB'?'27.5 ou 29':t==='Ville'?'28':'28';
     }
-
-    function speedsFromProfile(age, weight, use){
-      if(use === 'Vitesse' || use === 'Sport') return age < 18 ? '18 à 20 vitesses' : '20 à 24 vitesses';
-      if(use === 'Montagne') return weight > 90 ? '10 à 12 vitesses' : '11 à 12 vitesses';
-      if(use === 'Ville' || use === 'Quotidien') return '7 à 10 vitesses';
-      return '8 à 12 vitesses';
+    function speedsFromProfile(age,weight,use){
+      if(use==='Vitesse'||use==='Sport')return age<18?'18-20 vitesses':'20-24 vitesses';
+      if(use==='Montagne')return weight>90?'10-12 vitesses':'11-12 vitesses';
+      return '7-10 vitesses';
     }
-
     function bikeTypeFromUse(use){
-      if(use === 'Montagne') return 'MTB';
-      if(use === 'Ville') return 'Ville';
-      if(use === 'Vitesse') return 'Route';
-      if(use === 'Sport') return 'Route';
-      return 'Ville';
+      if(use==='Montagne')return'MTB';
+      if(use==='Ville')return'Ville';
+      if(use==='Vitesse'||use==='Sport')return'Route';
+      return'Ville';
     }
 
-    document.getElementById('recommendBtn').addEventListener('click', () => {
-      const height = Number(document.getElementById('height').value || 0);
-      const weight = Number(document.getElementById('weight').value || 0);
-      const age = Number(document.getElementById('age').value || 0);
-      const use = document.getElementById('useType').value;
-
-      if(!height || !weight || !age){
-        showToast("Veuillez remplir la taille, le poids et l'âge.");
-        return;
-      }
-
-      const type = bikeTypeFromUse(use);
-      const frame = sizeFromHeight(height, type);
-      const wheel = wheelFromType(type);
-      const speeds = speedsFromProfile(age, weight, use);
-
-      let message = `Recommandation personnalisée:\nType conseillé: ${type}\nTaille cadre: ${frame}\nTaille roues: ${wheel}\nVitesses conseillées: ${speeds}\nUsage: ${use}\nProfil: ${height} cm, ${weight} kg, ${age} ans`;
-
-      document.getElementById('resultText').textContent = message;
-      document.getElementById('recFrame').textContent = frame;
-      document.getElementById('recType').textContent = type;
-      document.getElementById('recWheel').textContent = wheel;
-      document.getElementById('recSpeed').textContent = speeds;
-      showToast("Recommandation générée avec succès");
+    document.getElementById('recommendBtn').addEventListener('click',()=>{
+      const h=Number(document.getElementById('height').value||0);
+      const w=Number(document.getElementById('weight').value||0);
+      const age=Number(document.getElementById('age').value||0);
+      const use=document.getElementById('useType').value;
+      if(!h||!w||!age){showToast('Veuillez remplir la taille, le poids et l’âge.');return}
+      const type=bikeTypeFromUse(use);
+      const frame=sizeFromHeight(h,type);
+      const wheel=wheelFromType(type);
+      const speed=speedsFromProfile(age,w,use);
+      document.getElementById('resultText').textContent=`Recommandation personnalisée: vélo ${type}, cadre ${frame}, roues ${wheel}, vitesses ${speed}.`;
+      document.getElementById('recFrame').textContent=frame;
+      document.getElementById('recType').textContent=type;
+      document.getElementById('recWheel').textContent=wheel;
+      document.getElementById('recSpeed').textContent=speed;
+      showToast('Recommandation générée avec succès');
     });
+
+    renderProducts();
   </script>
 </body>
 </html>
