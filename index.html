@@ -1,1134 +1,381 @@
-<!DOCTYPE html>
-<html lang="fr" dir="ltr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#2563eb" />
-  <title>VloSport Pro</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    :root{
-      --primary:#2563eb;
-      --primary-2:#0ea5e9;
-      --accent:#f97316;
-      --bg:#f5f7fb;
-      --card:#ffffff;
-      --text:#0f172a;
-      --muted:#64748b;
-      --border:#e2e8f0;
-      --shadow:0 14px 40px rgba(15,23,42,.10);
-      --shadow-soft:0 8px 20px rgba(15,23,42,.08);
-      --success:#16a34a;
-      --warning:#f59e0b;
-      --danger:#ef4444;
-      --radius:22px;
-      --transition:.28s ease;
-    }
-    html[data-theme="dark"]{
-      --bg:#0b1220;
-      --card:#101a2f;
-      --text:#f8fafc;
-      --muted:#b1bed4;
-      --border:#20304a;
-      --shadow:0 16px 44px rgba(0,0,0,.30);
-      --shadow-soft:0 8px 20px rgba(0,0,0,.20);
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{
-      font-family:'Inter',sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      line-height:1.6;
-      overflow-x:hidden;
-      transition:background var(--transition), color var(--transition);
-    }
-    body.menu-open{overflow:hidden}
-    a{text-decoration:none;color:inherit}
-    img{max-width:100%;display:block}
-    button,input,select{font:inherit}
-    .container{width:min(1240px, calc(100% - 20px));margin-inline:auto}
-    .section{padding:72px 0}
-    .section-title{text-align:center;margin-bottom:28px}
-    .section-title h2{font-size:clamp(26px,4vw,42px);margin-bottom:10px;font-weight:900}
-    .section-title p{color:var(--muted);font-size:1rem}
-    .accent{color:var(--primary)}
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:14px 18px;
-      border-radius:999px;
-      border:1px solid transparent;
-      cursor:pointer;
-      font-weight:700;
-      transition:transform var(--transition), box-shadow var(--transition), background var(--transition), color var(--transition), border-color var(--transition);
-      white-space:nowrap;
-    }
-    .btn:hover{transform:translateY(-2px)}
-    .btn-primary{
-      background:linear-gradient(135deg,var(--primary),var(--primary-2));
-      color:#fff;
-      box-shadow:0 12px 26px rgba(37,99,235,.24);
-    }
-    .btn-outline{
-      background:transparent;
-      border-color:var(--border);
-      color:var(--text);
-    }
-    .btn-light{
-      background:#fff;
-      color:var(--primary);
-      border-color:#fff;
-    }
 
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:1000;
-      background:rgba(255,255,255,.82);
-      backdrop-filter:blur(16px);
-      border-bottom:1px solid rgba(226,232,240,.85);
-    }
-    html[data-theme="dark"] .topbar{
-      background:rgba(11,18,32,.86);
-    }
-    .nav{
-      min-height:72px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .logo{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight:900;
-      font-size:1.15rem;
-    }
-    .logo i{font-size:1.4rem;color:var(--primary)}
-    .nav-links{
-      display:flex;
-      align-items:center;
-      gap:22px;
-      list-style:none;
-    }
-    .nav-links a{
-      font-weight:700;
-      opacity:.92;
-      position:relative;
-    }
-    .nav-links a::after{
-      content:'';
-      position:absolute;
-      bottom:-8px;
-      right:0;
-      width:0;
-      height:2px;
-      background:linear-gradient(90deg,var(--primary),var(--accent));
-      transition:width var(--transition);
-    }
-    .nav-links a:hover::after{width:100%}
-    .nav-actions{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .icon-btn{
-      width:44px;
-      height:44px;
-      border:none;
-      border-radius:50%;
-      display:grid;
-      place-items:center;
-      background:var(--card);
-      color:var(--text);
-      box-shadow:var(--shadow-soft);
-      cursor:pointer;
-    }
-    .hamburger{display:none}
-    .nav-overlay{
-      position:fixed;
-      inset:0;
-      background:rgba(2,6,23,.48);
-      opacity:0;
-      visibility:hidden;
-      transition:.22s ease;
-      z-index:999;
-    }
-    .nav-overlay.show{
-      opacity:1;
-      visibility:visible;
-    }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#D32F2F;--red2:#B71C1C;
+  --dark:#111;--dark2:#1a1a1a;--dark3:#222;--dark4:#2a2a2a;
+  --gray:#888;--light:#ccc;--white:#fff;
+}
+body{font-family:'Cairo',sans-serif;direction:rtl}
+.app{width:380px;min-height:100vh;background:var(--dark);font-family:'Cairo',sans-serif;overflow:hidden;}
 
-    .hero{
-      position:relative;
-      min-height:640px;
-      display:grid;
-      align-items:center;
-      overflow:hidden;
-      color:#fff;
-      background:
-        linear-gradient(135deg,rgba(37,99,235,.92),rgba(249,115,22,.88)),
-        url('https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
-    }
-    .hero::before{
-      content:'';
-      position:absolute;
-      inset:0;
-      background:linear-gradient(120deg,rgba(0,0,0,.12),rgba(0,0,0,.18));
-    }
-    .hero-content{
-      position:relative;
-      z-index:1;
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      gap:28px;
-      align-items:center;
-      padding:66px 0;
-    }
-    .hero h1{
-      font-size:clamp(32px,5vw,64px);
-      line-height:1.02;
-      margin-bottom:16px;
-      font-weight:900;
-    }
-    .hero p{
-      font-size:1.05rem;
-      max-width:660px;
-      opacity:.95;
-      margin-bottom:24px;
-    }
-    .hero-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      margin-bottom:18px;
-    }
-    .hero-card{
-      background:rgba(255,255,255,.14);
-      border:1px solid rgba(255,255,255,.24);
-      border-radius:28px;
-      padding:22px;
-      backdrop-filter:blur(16px);
-      box-shadow:0 20px 54px rgba(0,0,0,.16);
-    }
-    .hero-stats{
-      margin-top:16px;
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:12px;
-    }
-    .stat{
-      border-radius:18px;
-      background:rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.18);
-      padding:14px;
-      text-align:center;
-    }
-    .stat h3{font-size:1.35rem;margin-bottom:4px}
-    .stat p{opacity:.92;font-size:.94rem}
+/* WELCOME SCREEN */
+#welcome-screen{
+  width:100%;min-height:100vh;
+  background:var(--dark);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:40px 30px;
+  position:relative;
+}
+.welcome-logo-area{text-align:center;margin-bottom:32px;}
+.welcome-logo-ring{
+  width:90px;height:90px;border-radius:50%;
+  border:3px solid var(--red);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 16px;
+  background:radial-gradient(circle,#2d0000,#111);
+  position:relative;
+}
+.welcome-logo-ring::before{
+  content:'';position:absolute;inset:-6px;border-radius:50%;
+  border:1px solid rgba(211,47,47,0.3);
+}
+.welcome-logo-icon{font-size:38px;color:var(--red);}
+.welcome-brand{font-size:28px;font-weight:900;color:#fff;letter-spacing:2px;}
+.welcome-brand span{color:var(--red);}
+.welcome-tagline{font-size:13px;color:var(--gray);margin-top:4px;letter-spacing:1px;}
 
-    .features-grid,
-    .articles-grid,
-    .reviews-grid,
-    .suggest-grid{
-      display:grid;
-      gap:16px;
-      grid-template-columns:repeat(3,1fr);
-    }
-    .products-grid{
-      display:grid;
-      gap:12px;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-    }
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow-soft);
-      overflow:hidden;
-      transition:transform var(--transition), box-shadow var(--transition);
-    }
-    .card:hover{
-      transform:translateY(-4px);
-      box-shadow:var(--shadow);
-    }
-    .feature{
-      padding:20px;
-      text-align:center;
-    }
-    .feature .ico{
-      width:62px;
-      height:62px;
-      border-radius:50%;
-      margin:0 auto 14px;
-      display:grid;
-      place-items:center;
-      color:#fff;
-      background:linear-gradient(135deg,var(--primary),var(--accent));
-      font-size:1.2rem;
-    }
+.welcome-msg{
+  background:var(--dark3);
+  border:1px solid #2e2e2e;
+  border-right:3px solid var(--red);
+  border-radius:14px;
+  padding:18px 20px;
+  width:100%;
+  margin-bottom:28px;
+  text-align:right;
+}
+.welcome-msg p{color:var(--light);font-size:14px;line-height:1.8;}
+.welcome-msg p strong{color:var(--red);}
 
-    .product-media{
-      position:relative;
-      aspect-ratio:16/10;
-      overflow:hidden;
-      background:#dbeafe;
-    }
-    .product-media .main-img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-    .badge{
-      position:absolute;
-      top:12px;
-      right:12px;
-      z-index:2;
-      background:var(--success);
-      color:#fff;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:.78rem;
-      font-weight:800;
-    }
-    .thumbs{
-      display:flex;
-      gap:8px;
-      padding:10px 12px;
-      flex-wrap:wrap;
-      border-top:1px solid var(--border);
-      background:rgba(148,163,184,.04);
-    }
-    .thumb{
-      width:54px;
-      height:36px;
-      border-radius:10px;
-      object-fit:cover;
-      cursor:pointer;
-      border:2px solid transparent;
-      opacity:.88;
-    }
-    .thumb.active{
-      border-color:var(--primary);
-      opacity:1;
-    }
-    .product-body{
-      padding:16px;
-    }
-    .product-body h3{
-      font-size:1.08rem;
-      margin-bottom:6px;
-    }
-    .price-row{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-      margin:8px 0 10px;
-    }
-    .price{
-      font-size:1.2rem;
-      font-weight:900;
-      color:var(--primary);
-    }
-    .old-price{
-      color:var(--muted);
-      text-decoration:line-through;
-    }
-    .meta{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-bottom:10px;
-      color:var(--muted);
-      font-size:.88rem;
-    }
-    .meta span{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      background:rgba(37,99,235,.07);
-      padding:6px 9px;
-      border-radius:999px;
-    }
-    .stars{color:#f59e0b}
-    .specs{
-      display:grid;
-      gap:7px;
-      margin:12px 0;
-      color:var(--muted);
-      font-size:.92rem;
-    }
-    .specs div{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      border-bottom:1px dashed var(--border);
-      padding-bottom:7px;
-    }
-    .actions{
-      display:flex;
-      gap:8px;
-      margin-top:14px;
-    }
-    .actions .btn{flex:1}
+.name-label{
+  font-size:13px;color:var(--gray);
+  align-self:flex-start;margin-bottom:8px;width:100%;text-align:right;
+}
+.name-input-wrap{width:100%;position:relative;margin-bottom:20px;}
+.name-input{
+  width:100%;background:var(--dark3);
+  border:1px solid #333;border-radius:14px;
+  padding:14px 18px;font-size:16px;
+  color:#fff;font-family:'Cairo',sans-serif;
+  text-align:right;outline:none;
+  transition:border 0.2s;
+}
+.name-input:focus{border-color:var(--red);}
+.name-input::placeholder{color:#555;}
 
-    .smart-form{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:28px;
-      box-shadow:var(--shadow);
-      padding:20px;
-    }
-    .form-grid{
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:12px;
-      align-items:end;
-    }
-    .field label{
-      display:block;
-      margin-bottom:8px;
-      font-weight:700;
-      color:var(--muted);
-      font-size:.9rem;
-    }
-    .field input,
-    .field select{
-      width:100%;
-      padding:13px 14px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background:transparent;
-      color:var(--text);
-      outline:none;
-    }
-    .field input:focus,
-    .field select:focus{
-      border-color:var(--primary);
-      box-shadow:0 0 0 3px rgba(37,99,235,.12);
-    }
+.enter-btn{
+  width:100%;background:var(--red);
+  border:none;border-radius:14px;
+  padding:15px;font-size:17px;font-weight:700;
+  color:#fff;font-family:'Cairo',sans-serif;
+  cursor:pointer;
+  transition:background 0.2s,transform 0.1s;
+  letter-spacing:1px;
+}
+.enter-btn:hover{background:var(--red2);}
+.enter-btn:active{transform:scale(0.98);}
 
-    .pagination{
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:center;
-      gap:8px;
-      margin-top:22px;
-      align-items:center;
-    }
-    .page-btn{
-      min-width:42px;
-      height:42px;
-      padding:0 12px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:var(--card);
-      color:var(--text);
-      cursor:pointer;
-      font-weight:800;
-      box-shadow:var(--shadow-soft);
-    }
-    .page-btn.active{
-      background:linear-gradient(135deg,var(--primary),var(--primary-2));
-      color:#fff;
-      border-color:transparent;
-    }
-    .page-ellipsis{
-      padding:0 4px;
-      color:var(--muted);
-      font-weight:900;
-    }
+/* MAIN APP */
+#main-app{display:none;width:100%;}
 
-    .result-box{
-      margin-top:18px;
-      border-radius:22px;
-      background:linear-gradient(135deg,rgba(37,99,235,.10),rgba(249,115,22,.08));
-      border:1px solid var(--border);
-      padding:18px;
-      display:grid;
-      gap:10px;
-    }
-    .result-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:10px;
-      margin-top:6px;
-    }
-    .mini{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:12px;
-      box-shadow:var(--shadow-soft);
-    }
-    .mini strong{display:block;margin-bottom:4px}
+.top-banner{
+  background:linear-gradient(135deg,#1a0000,#2d0000,#1a0000);
+  border-bottom:2px solid var(--red);
+  padding:10px 16px 8px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.brand-name{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px;}
+.brand-plus{color:var(--red);font-size:22px;}
+.brand-tag{
+  font-size:10px;color:var(--red);
+  border:1px solid var(--red);padding:2px 8px;
+  border-radius:12px;font-weight:600;letter-spacing:1px;
+}
+.status-bar{
+  background:var(--dark);padding:6px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:12px;color:var(--light);
+}
+.status-time{font-weight:700;font-size:14px;color:#fff;}
+.status-user{
+  background:var(--red);color:#fff;
+  padding:2px 10px;border-radius:20px;
+  font-size:11px;font-weight:700;
+  display:flex;align-items:center;gap:4px;
+}
+.header{padding:14px 16px 0;display:flex;justify-content:space-between;align-items:flex-start;}
+.header-icons{display:flex;gap:10px;}
+.icon-btn{
+  width:42px;height:42px;background:var(--dark3);
+  border-radius:12px;display:flex;align-items:center;justify-content:center;
+  color:var(--light);font-size:20px;border:1px solid #333;
+}
+.greeting-block{text-align:right;}
+.greeting-text{font-size:22px;font-weight:700;color:#fff;line-height:1.2;}
+.greeting-name{font-size:15px;color:var(--gray);}
 
-    .footer{
-      background:#09111f;
-      color:#dbe4f3;
-      padding:52px 0 22px;
-      margin-top:24px;
-    }
-    .footer-grid{
-      display:grid;
-      grid-template-columns:1.2fr .8fr .8fr 1fr;
-      gap:20px;
-    }
-    .footer h4{color:#fff;margin-bottom:14px}
-    .footer p,.footer li{color:#b9c7db;margin-bottom:10px}
-    .footer ul{list-style:none}
-    .social{
-      display:flex;
-      gap:10px;
-      margin-top:14px;
-    }
-    .social a{
-      width:42px;
-      height:42px;
-      border-radius:50%;
-      display:grid;
-      place-items:center;
-      background:rgba(255,255,255,.08);
-    }
+.card-section{padding:16px 16px 0;}
+.main-card{
+  background:var(--red);border-radius:20px;
+  padding:20px 22px;position:relative;overflow:hidden;min-height:130px;
+}
+.main-card::before{content:'';position:absolute;bottom:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(0,0,0,0.15);}
+.main-card::after{content:'';position:absolute;top:-30px;left:40px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.07);}
+.card-logo{font-size:18px;font-weight:900;color:#fff;margin-bottom:4px;display:flex;align-items:center;gap:6px;}
+.card-logo-icon{width:30px;height:30px;background:rgba(255,255,255,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.card-label{font-size:12px;color:rgba(255,255,255,0.8);text-align:left;position:absolute;top:20px;left:22px;}
+.card-balance{font-size:13px;color:rgba(255,255,255,0.9);text-align:left;position:absolute;top:36px;left:22px;}
+.card-dots{font-size:18px;color:#fff;letter-spacing:3px;text-align:left;position:absolute;top:56px;left:22px;}
+.card-eye{position:absolute;bottom:18px;left:22px;color:rgba(255,255,255,0.7);font-size:20px;}
+.dot-indicators{display:flex;gap:6px;justify-content:center;margin-top:12px;}
+.dot{width:8px;height:8px;border-radius:50%;background:#444;}
+.dot.active{background:var(--red);width:20px;border-radius:4px;}
 
-    .floating-wa{
-      position:fixed;
-      left:18px;
-      bottom:18px;
-      z-index:999;
-      width:58px;
-      height:58px;
-      border-radius:50%;
-      display:grid;
-      place-items:center;
-      background:#25d366;
-      color:#fff;
-      font-size:1.7rem;
-      box-shadow:0 12px 30px rgba(37,211,102,.34);
-    }
+.promo-banner{
+  margin:16px 16px 0;background:var(--dark3);
+  border-radius:16px;overflow:hidden;position:relative;
+  height:72px;border:1px solid #333;
+}
+.promo-players{position:absolute;left:0;bottom:0;width:140px;height:72px;background:linear-gradient(135deg,#8B0000,#cc0000);display:flex;align-items:center;justify-content:center;font-size:28px;}
+.promo-text{position:absolute;right:16px;top:50%;transform:translateY(-50%);text-align:right;}
+.promo-title{color:var(--red);font-size:14px;font-weight:700;}
+.promo-sub{color:#fff;font-size:13px;font-weight:600;}
+.promo-badge{position:absolute;top:8px;left:150px;background:#FFD700;color:#000;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;}
 
-    .modal-backdrop{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.58);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:2000;
-      padding:14px;
-    }
-    .modal-backdrop.show{display:flex}
-    .modal{
-      width:min(980px,100%);
-      max-height:92vh;
-      overflow:auto;
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:26px;
-      box-shadow:0 24px 60px rgba(0,0,0,.28);
-    }
-    .modal-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:14px;
-      padding:16px 18px;
-      border-bottom:1px solid var(--border);
-    }
-    .modal-title{font-size:1.15rem;font-weight:900}
-    .close-btn{
-      width:42px;
-      height:42px;
-      border:none;
-      border-radius:50%;
-      cursor:pointer;
-      background:transparent;
-      color:var(--text);
-      font-size:1.1rem;
-    }
-    .modal-body{padding:16px}
-    .detail-top{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:16px;
-      margin-bottom:16px;
-    }
-    .detail-images{
-      border-radius:20px;
-      overflow:hidden;
-      border:1px solid var(--border);
-      background:#dbeafe;
-    }
-    .detail-images .big{
-      width:100%;
-      aspect-ratio:4/3;
-      object-fit:cover;
-      display:block;
-    }
-    .detail-thumbs{
-      display:flex;
-      gap:8px;
-      padding:10px;
-      border-top:1px solid var(--border);
-      background:rgba(148,163,184,.05);
-      flex-wrap:wrap;
-    }
-    .detail-thumbs img{
-      width:64px;
-      height:46px;
-      border-radius:10px;
-      object-fit:cover;
-      cursor:pointer;
-      border:2px solid transparent;
-      opacity:.9;
-    }
-    .detail-thumbs img.active{
-      border-color:var(--primary);
-      opacity:1;
-    }
-    .detail-card{
-      border:1px solid var(--border);
-      border-radius:20px;
-      padding:16px;
-      background:rgba(148,163,184,.04);
-    }
-    .detail-card h3{margin-bottom:8px}
-    .detail-card p{color:var(--muted)}
-    .info-list{
-      display:grid;
-      gap:10px;
-      margin-top:14px;
-    }
-    .info-item{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      padding:10px 0;
-      border-bottom:1px dashed var(--border);
-    }
-    .info-item:last-child{border-bottom:none}
-    .info-item span:first-child{color:var(--muted);font-weight:700}
-    .cols-2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:16px;
-      margin-top:16px;
-    }
-    .box{
-      border:1px solid var(--border);
-      border-radius:20px;
-      padding:16px;
-      background:rgba(148,163,184,.04);
-    }
-    .box h4{margin-bottom:10px}
-    .box ul{padding-inline-start:20px}
-    .box li{margin-bottom:8px;color:var(--muted)}
-    .compare-table{
-      width:100%;
-      border-collapse:collapse;
-      border-radius:16px;
-      overflow:hidden;
-      margin-top:10px;
-    }
-    .compare-table th,
-    .compare-table td{
-      padding:10px;
-      border-bottom:1px solid var(--border);
-      text-align:left;
-      font-size:.92rem;
-    }
-    .compare-table th{color:var(--muted);font-weight:800}
+.services-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:16px 16px 100px;}
+.svc-btn{
+  background:var(--dark3);border-radius:14px;
+  padding:14px 8px;display:flex;flex-direction:column;
+  align-items:center;gap:8px;border:1px solid #2e2e2e;
+  cursor:pointer;position:relative;
+  animation:fadeUp 0.4s ease both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.svc-icon{width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:var(--dark4);border-radius:10px;font-size:18px;color:var(--light);}
+.svc-label{font-size:11px;color:var(--light);text-align:center;font-weight:600;line-height:1.3;}
+.new-badge{position:absolute;top:6px;right:6px;background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:8px;}
 
-    .toast{
-      position:fixed;
-      top:88px;
-      right:18px;
-      background:var(--card);
-      border:1px solid var(--border);
-      color:var(--text);
-      box-shadow:var(--shadow);
-      border-radius:14px;
-      padding:12px 16px;
-      z-index:3000;
-      display:none;
-    }
+.bottom-nav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:380px;background:var(--dark2);
+  border-top:1px solid #2e2e2e;
+  display:flex;align-items:center;padding:8px 0 12px;
+}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--gray);font-size:10px;cursor:pointer;}
+.nav-item i{font-size:22px;}
+.nav-item.active{color:var(--red);}
+.nav-fab{width:52px;height:52px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;margin-top:-20px;border:3px solid var(--dark);flex-shrink:0;}
 
-    @media (max-width:1100px){
-      .features-grid,.articles-grid,.reviews-grid,.suggest-grid,.products-grid{grid-template-columns:repeat(2,1fr)}
-      .form-grid{grid-template-columns:repeat(2,1fr)}
-      .footer-grid,.detail-top,.cols-2,.result-grid{grid-template-columns:1fr 1fr}
-    }
-    @media (max-width:780px){
-      .hamburger{display:grid}
-      .nav-links{
-        position:fixed;
-        top:72px;
-        right:0;
-        left:auto;
-        width:min(340px,88vw);
-        height:calc(100vh - 72px);
-        background:var(--card);
-        flex-direction:column;
-        align-items:flex-start;
-        padding:18px;
-        gap:16px;
-        border-left:1px solid var(--border);
-        box-shadow:var(--shadow);
-        transform:translateX(105%);
-        transition:transform var(--transition);
-        overflow:auto;
-        -webkit-overflow-scrolling:touch;
-      }
-      .nav-links.show{transform:translateX(0)}
-      .hero-content{grid-template-columns:1fr;padding:46px 0}
-      .hero h1{font-size:2.2rem}
-      .section{padding:60px 0}
-      .features-grid,.articles-grid,.reviews-grid,.suggest-grid,.form-grid,.footer-grid,.detail-top,.cols-2,.result-grid{grid-template-columns:1fr}
-      .products-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-      .product-body{padding:12px}
-      .actions{flex-direction:column}
-      .modal{max-height:94vh}
-      .detail-card{padding:14px}
-    }
-    @media (max-width:560px){
-      .container{width:min(100% - 14px,1240px)}
-      .hero h1{font-size:1.95rem}
-      .hero-actions{flex-direction:column}
-      .products-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-      .thumb{width:48px;height:32px}
-      .price{font-size:1rem}
-      .product-body h3{font-size:.92rem}
-      .specs,.meta{display:none}
-      .product-media{aspect-ratio:1/1}
-      .page-btn{min-width:38px;height:38px}
-      .modal-body{padding:12px}
-      .detail-thumbs img{width:56px;height:40px}
-    }
-    @media (max-width:390px){
-      .products-grid{gap:6px}
-      .product-body{padding:10px}
-      .product-body .btn{padding:10px 12px;font-size:.85rem}
-      .btn{padding:12px 14px}
-      .nav-links{width:100vw}
-    }
-  </style>
-</head>
-<body>
-  <div class="toast" id="toastMessage">copied</div>
-  <div class="nav-overlay" id="navOverlay"></div>
+/* TOAST */
+#toast{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);
+  background:var(--red);color:#fff;padding:12px 24px;
+  border-radius:30px;font-family:'Cairo',sans-serif;font-size:14px;
+  font-weight:700;z-index:999;transition:transform 0.4s ease;
+  white-space:nowrap;
+}
+#toast.show{transform:translateX(-50%) translateY(0);}
 
-  <header class="topbar">
-    <div class="container nav">
-      <a class="logo" href="#home"><i class="fa-solid fa-bicycle"></i><span>VloSport <span class="accent">Pro</span></span></a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#home">Accueil</a></li>
-        <li><a href="#catalog">Vélos</a></li>
-        <li><a href="#smart">Choix intelligent</a></li>
-        <li><a href="#articles">Conseils</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <div class="nav-actions">
-        <button class="icon-btn" id="themeToggle" aria-label="Changer le thème"><i class="fa-solid fa-moon"></i></button>
-        <button class="icon-btn hamburger" id="menuToggle" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+/* TRANSITION OVERLAY */
+#overlay{
+  position:fixed;inset:0;background:#111;
+  z-index:500;opacity:0;pointer-events:none;
+  transition:opacity 0.4s;
+}
+#overlay.active{opacity:1;pointer-events:all;}
+</style>
+
+<div style="display:flex;justify-content:center;background:#000;min-height:100vh;">
+<div class="app" id="root">
+
+  <!-- WELCOME -->
+  <div id="welcome-screen">
+    <div class="welcome-logo-area">
+      <div class="welcome-logo-ring">
+        <i class="ti ti-wallet welcome-logo-icon" aria-hidden="true"></i>
+      </div>
+      <div class="welcome-brand"><span>PLUS</span> SMM</div>
+      <div class="welcome-tagline">منصة الدفع الذكي</div>
+    </div>
+
+    <div class="welcome-msg">
+      <p>👋 مرحباً بك في <strong>PLUS SMM</strong></p>
+      <p style="margin-top:8px;font-size:13px;color:#aaa;">منصتك المتكاملة للمدفوعات والتحويلات المالية. أدخل اسمك للمتابعة.</p>
+    </div>
+
+    <div class="name-label">اسمك الكريم</div>
+    <div class="name-input-wrap">
+      <input class="name-input" id="nameInput" type="text" placeholder="أدخل اسمك هنا..." maxlength="20" />
+    </div>
+    <button class="enter-btn" onclick="enterApp()">
+      ادخل إلى PLUS SMM ←
+    </button>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="main-app">
+    <div class="top-banner">
+      <div class="brand-tag">SMM PANEL</div>
+      <div class="brand-name"><span class="brand-plus">PLUS</span> SMM</div>
+    </div>
+    <div class="status-bar">
+      <div style="display:flex;gap:6px;align-items:center;font-size:12px;">
+        <span>38</span>
+        <i class="ti ti-wifi" aria-hidden="true"></i>
+        <i class="ti ti-bluetooth" aria-hidden="true"></i>
+      </div>
+      <div class="status-time">11:20</div>
+      <div class="status-user"><i class="ti ti-user" style="font-size:12px"></i><span id="navName"></span></div>
+    </div>
+
+    <div class="header">
+      <div class="header-icons">
+        <div class="icon-btn"><i class="ti ti-robot" aria-hidden="true"></i></div>
+        <div class="icon-btn"><i class="ti ti-bell" aria-hidden="true"></i></div>
+      </div>
+      <div class="greeting-block">
+        <div class="greeting-text" id="greetingText">مساء الخير</div>
+        <div class="greeting-name" id="greetingName"></div>
       </div>
     </div>
-  </header>
 
-  <section class="hero" id="home">
-    <div class="container hero-content">
-      <div>
-        <h1>Le vélo parfait pour chaque trajet</h1>
-        <p>Une boutique moderne de vélos avec un design sportif, des fiches techniques complètes, un système de recommandation intelligent et des conseils d’entretien en français.</p>
-        <div class="hero-actions">
-          <a href="#catalog" class="btn btn-primary"><i class="fa-solid fa-bicycle"></i> Voir les vélos</a>
-          <a href="#smart" class="btn btn-light"><i class="fa-solid fa-wand-magic-sparkles"></i> Trouver mon vélo</a>
+    <div class="card-section">
+      <div class="main-card">
+        <div class="card-logo">
+          <div class="card-logo-icon"><i class="ti ti-wallet" style="color:#fff;font-size:14px"></i></div>
+          PLUS SMM
         </div>
+        <div class="card-label">حساب</div>
+        <div class="card-balance">ريال يمني</div>
+        <div class="card-dots">••••</div>
+        <div class="card-eye"><i class="ti ti-eye-off" aria-hidden="true"></i></div>
       </div>
-      <div class="hero-card">
-        <div class="hero-stats">
-          <div class="stat"><h3>150+</h3><p>Vélos sélectionnés</p></div>
-          <div class="stat"><h3>4.95</h3><p>Avis clients</p></div>
-          <div class="stat"><h3>24h</h3><p>Support rapide</p></div>
-          <div class="stat"><h3>FR</h3><p>Interface française</p></div>
-        </div>
+      <div class="dot-indicators">
+        <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
       </div>
     </div>
-  </section>
 
-  <section class="section" id="catalog">
-    <div class="container">
-      <div class="section-title">
-        <h2>Catalogue de <span class="accent">vélos</span></h2>
-        <p>Chaque vélo affiche ses caractéristiques et un bouton Détails complet.</p>
+    <div class="promo-banner">
+      <div class="promo-players">⚽🏆</div>
+      <div class="promo-text">
+        <div class="promo-title">المونديال</div>
+        <div class="promo-sub">مع PLUS SMM</div>
       </div>
-      <div class="products-grid" id="productsGrid"></div>
-      <div class="pagination" id="pagination"></div>
+      <div class="promo-badge">جديد</div>
     </div>
-  </section>
 
-  <section class="section" id="smart">
-    <div class="container">
-      <div class="section-title">
-        <h2>Choix <span class="accent">intelligent</span></h2>
-        <p>Indiquez votre profil et recevez une recommandation automatique.</p>
+    <div class="services-grid" id="servicesGrid">
+      <div class="svc-btn" style="animation-delay:0.05s">
+        <div class="svc-icon"><i class="ti ti-transfer" aria-hidden="true"></i></div>
+        <div class="svc-label">تحويلات مالية</div>
       </div>
-      <div class="smart-form">
-        <div class="form-grid">
-          <div class="field">
-            <label for="height">Taille cm</label>
-            <input id="height" type="number" placeholder="ex: 175">
-          </div>
-          <div class="field">
-            <label for="weight">Poids kg</label>
-            <input id="weight" type="number" placeholder="ex: 72">
-          </div>
-          <div class="field">
-            <label for="age">Âge</label>
-            <input id="age" type="number" placeholder="ex: 29">
-          </div>
-          <div class="field">
-            <label for="useType">Type d’utilisation</label>
-            <select id="useType">
-              <option value="Ville">La ville</option>
-              <option value="Montagne">Les montagnes</option>
-              <option value="Vitesse">La vitesse</option>
-              <option value="Quotidien">Utilisation quotidienne</option>
-              <option value="Sport">Le sport</option>
-            </select>
-          </div>
-          <div class="field">
-            <button class="btn btn-primary" id="recommendBtn" style="width:100%"><i class="fa-solid fa-wand-magic-sparkles"></i> Recommander</button>
-          </div>
-        </div>
-        <div class="result-box" id="resultBox">
-          <strong>Résultat de recommandation</strong>
-          <div id="resultText" style="color:var(--muted)">Remplissez les informations pour obtenir un vélo conseillé automatiquement.</div>
-          <div class="result-grid">
-            <div class="mini"><strong>Taille cadre</strong><span id="recFrame">-</span></div>
-            <div class="mini"><strong>Type vélo</strong><span id="recType">-</span></div>
-            <div class="mini"><strong>Taille roues</strong><span id="recWheel">-</span></div>
-            <div class="mini"><strong>Vitesses</strong><span id="recSpeed">-</span></div>
-          </div>
-        </div>
+      <div class="svc-btn" style="animation-delay:0.1s">
+        <div class="svc-icon"><i class="ti ti-building-bank" aria-hidden="true"></i></div>
+        <div class="svc-label">حوالات محلية</div>
+      </div>
+      <div class="svc-btn" style="animation-delay:0.15s">
+        <div class="svc-icon"><i class="ti ti-device-mobile-charging" aria-hidden="true"></i></div>
+        <div class="svc-label">الشحن والسداد</div>
+      </div>
+      <div class="svc-btn" style="animation-delay:0.2s">
+        <div class="svc-icon"><i class="ti ti-shopping-bag" aria-hidden="true"></i></div>
+        <div class="svc-label">شراء اونلاين</div>
+      </div>
+      <div class="svc-btn" style="animation-delay:0.25s">
+        <div class="svc-icon"><i class="ti ti-credit-card" aria-hidden="true"></i></div>
+        <div class="svc-label">دفع المشتريات</div>
+      </div>
+      <div class="svc-btn" style="animation-delay:0.3s">
+        <div class="svc-icon"><i class="ti ti-cash" aria-hidden="true"></i></div>
+        <div class="svc-label">سحب نقدي</div>
+      </div>
+      <div class="svc-btn" style="animation-delay:0.35s">
+        <div class="svc-icon"><i class="ti ti-receipt" aria-hidden="true"></i></div>
+        <div class="svc-label">المدفوعات</div>
+      </div>
+      <div class="svc-btn" style="animation-delay:0.4s">
+        <div class="svc-icon"><i class="ti ti-device-gamepad" aria-hidden="true"></i></div>
+        <div class="svc-label">خدمات ترفيهية</div>
+      </div>
+      <div class="svc-btn" style="animation-delay:0.45s">
+        <div class="new-badge">جديد</div>
+        <div class="svc-icon"><i class="ti ti-shield" aria-hidden="true"></i></div>
+        <div class="svc-label">جيبي</div>
       </div>
     </div>
-  </section>
 
-  <section class="section" id="articles">
-    <div class="container">
-      <div class="section-title">
-        <h2>Articles <span class="accent">Conseils</span></h2>
-        <p>Des articles en français pour garder votre vélo en bon état.</p>
+    <div class="bottom-nav">
+      <div class="nav-item">
+        <i class="ti ti-user" aria-hidden="true"></i><span>الملف</span>
       </div>
-      <div class="articles-grid">
-        <div class="card feature"><div class="ico"><i class="fa-solid fa-screwdriver-wrench"></i></div><h3>Entretien</h3><p>Nettoyez régulièrement le cadre et vérifiez les vis.</p></div>
-        <div class="card feature"><div class="ico"><i class="fa-solid fa-link"></i></div><h3>Chaîne</h3><p>Dégraissez puis lubrifiez pour garder une transmission fluide.</p></div>
-        <div class="card feature"><div class="ico"><i class="fa-solid fa-brake-warning"></i></div><h3>Freins</h3><p>Surveillez l’usure et gardez les disques propres.</p></div>
+      <div class="nav-item">
+        <i class="ti ti-chart-bar" aria-hidden="true"></i><span>التقارير</span>
       </div>
-    </div>
-  </section>
-
-  <section class="section" id="contact">
-    <div class="container">
-      <div class="section-title">
-        <h2>Contact</h2>
-        <p>Retrouvez-nous via les réseaux sociaux et WhatsApp.</p>
+      <div class="nav-fab"><i class="ti ti-chevrons-up" aria-hidden="true"></i></div>
+      <div class="nav-item">
+        <i class="ti ti-layout-grid" aria-hidden="true"></i><span>الخدمات</span>
       </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <h4>VloSport Pro</h4>
-          <p>Une boutique moderne pensée pour les passionnés de vélo.</p>
-          <div class="social">
-            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://wa.me/33123456789" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-          </div>
-        </div>
-        <div>
-          <h4>Navigation</h4>
-          <ul><li>Accueil</li><li>Vélos</li><li>Choix intelligent</li><li>Conseils</li></ul>
-        </div>
-        <div>
-          <h4>Services</h4>
-          <ul><li>Vente de vélos</li><li>Conseil personnalisé</li><li>Comparaison de modèles</li></ul>
-        </div>
-        <div>
-          <h4>Contact</h4>
-          <ul><li>Paris, France</li><li>+33 1 23 45 67 89</li><li>contact@velosportpro.fr</li></ul>
-        </div>
+      <div class="nav-item active">
+        <i class="ti ti-home" aria-hidden="true"></i><span>الرئيسية</span>
       </div>
-    </div>
-  </footer>
-
-  <a class="floating-wa" href="https://wa.me/33123456789" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-
-  <div class="modal-backdrop" id="detailsModal">
-    <div class="modal" role="dialog" aria-modal="true">
-      <div class="modal-header">
-        <div class="modal-title" id="modalTitle">Détails du vélo</div>
-        <button class="close-btn" id="closeModal" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="modal-body" id="modalBody"></div>
     </div>
   </div>
 
-  <script>
-    const themeToggle=document.getElementById('themeToggle');
-    const menuToggle=document.getElementById('menuToggle');
-    const navLinks=document.getElementById('navLinks');
-    const navOverlay=document.getElementById('navOverlay');
-    const toast=document.getElementById('toastMessage');
-    const modal=document.getElementById('detailsModal');
-    const modalBody=document.getElementById('modalBody');
-    const modalTitle=document.getElementById('modalTitle');
-    const closeModal=document.getElementById('closeModal');
+</div>
+</div>
 
-    const products=[
-      {name:'Aero MTX 29',price:'1 299',oldPrice:'1 599',type:'MTB',size:'M 17',speeds:'12 vitesses',brakes:'Hydraulique',state:'Neuf',weight:'13.4 kg',tires:'29 x 2.25',use:'Montagne, sentiers, sport',rating:'4.8',images:['https://images.unsplash.com/photo-1508974239320-0a029497e820?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=1200&auto=format&fit=crop'],pros:['Très stable en descente','Suspension confortable','Freinage puissant'],cons:['Un peu lourd sur route','Prix plus élevé'],compare:'Plus robuste qu’un vélo de ville.',suggestions:['Trail Master 27.5','Peak Race 29'],badge:'Neuf'},
-      {name:'Road Carbon S',price:'1 890',oldPrice:'2 250',type:'Route',size:'L 56 cm',speeds:'22 vitesses',brakes:'Hydraulique',state:'Neuf',weight:'8.9 kg',tires:'700 x 28C',use:'Vitesse, route, longue distance',rating:'4.9',images:['https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1200&auto=format&fit=crop'],pros:['Très léger','Excellent rendement','Position sportive'],cons:['Moins confortable sur chemins','Prix premium'],compare:'Plus rapide qu’un vélo ville.',suggestions:['Road Lite 56','Endurance FR 54'],badge:'Neuf'},
-      {name:'City Comfort 7',price:'699',oldPrice:'849',type:'Ville',size:'M',speeds:'7 vitesses',brakes:'Mécanique',state:'Neuf',weight:'14.8 kg',tires:'700 x 38C',use:'Ville, trajets quotidiens, loisirs',rating:'4.7',images:['https://images.unsplash.com/photo-1525104885119-87e3f3c4a0a0?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1511994298241-608e28f14fde?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?q=80&w=1200&auto=format&fit=crop'],pros:['Confort très bon','Position droite','Facile à utiliser'],cons:['Moins rapide','Plus lourd'],compare:'Idéal pour la ville.',suggestions:['Urban Ride 7','Town Easy'],badge:'Neuf'},
-      {name:'Urban Lite',price:'549',oldPrice:'649',type:'Ville',size:'S',speeds:'6 vitesses',brakes:'Mécanique',state:'Occasion',weight:'13.6 kg',tires:'700 x 35C',use:'Ville, promenade',rating:'4.6',images:['https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=1200&auto=format&fit=crop'],pros:['Prix accessible','Position confortable','Usage simple'],cons:['Moins sportif','Moins rapide'],compare:'Bon choix pour débuter.',suggestions:['City Comfort 7','Town Easy'],badge:'Occasion'},
-      {name:'Trail Master 27.5',price:'1 099',oldPrice:'1 299',type:'MTB',size:'L 19',speeds:'10 vitesses',brakes:'Hydraulique',state:'Neuf',weight:'14.2 kg',tires:'27.5 x 2.25',use:'Montagne, chemins',rating:'4.8',images:['https://images.unsplash.com/photo-1508974239320-0a029497e820?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1200&auto=format&fit=crop'],pros:['Très maniable','Bon confort','Freinage solide'],cons:['Moins rapide sur route','Plus bruyant'],compare:'Polyvalent et stable.',suggestions:['Aero MTX 29','Peak Race 29'],badge:'Neuf'},
-      {name:'Speed Pro R',price:'1 550',oldPrice:'1 790',type:'Route',size:'M 54',speeds:'20 vitesses',brakes:'Hydraulique',state:'Neuf',weight:'9.4 kg',tires:'700 x 25C',use:'Vitesse, entraînement',rating:'4.9',images:['https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1200&auto=format&fit=crop','https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1200&auto=format&fit=crop'],pros:['Léger','Rapide','Excellente rigidité'],cons:['Moins confort','Prix élevé'],compare:'Pour les sorties rapides.',suggestions:['Road Carbon S','Road Lite 56'],badge:'Neuf'}
-    ];
+<div id="overlay"></div>
+<div id="toast"></div>
 
-    const perPage=6;
-    let currentPage=1;
+<script>
+function getGreeting(){
+  const h=new Date().getHours();
+  if(h>=5&&h<12) return 'صباح الخير';
+  if(h>=12&&h<17) return 'مساء الخير';
+  if(h>=17&&h<21) return 'مساء النور';
+  return 'مرحباً';
+}
 
-    function showToast(msg){
-      toast.textContent=msg;
-      toast.style.display='block';
-      clearTimeout(window.toastTimer);
-      window.toastTimer=setTimeout(()=>toast.style.display='none',2200);
-    }
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
 
-    function setMenu(open){
-      navLinks.classList.toggle('show',open);
-      navOverlay.classList.toggle('show',open);
-      document.body.classList.toggle('menu-open',open);
-      menuToggle.setAttribute('aria-expanded',open?'true':'false');
-    }
-    function closeMenu(){setMenu(false)}
+function enterApp(){
+  const name=document.getElementById('nameInput').value.trim();
+  if(!name){
+    document.getElementById('nameInput').style.borderColor='#D32F2F';
+    document.getElementById('nameInput').placeholder='من فضلك أدخل اسمك!';
+    setTimeout(()=>{
+      document.getElementById('nameInput').style.borderColor='#333';
+      document.getElementById('nameInput').placeholder='أدخل اسمك هنا...';
+    },1500);
+    return;
+  }
 
-    menuToggle?.addEventListener('click',()=>setMenu(!navLinks.classList.contains('show')));
-    navOverlay.addEventListener('click',closeMenu);
-    navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+  const overlay=document.getElementById('overlay');
+  overlay.classList.add('active');
 
-    const savedTheme=localStorage.getItem('theme');
-    if(savedTheme)document.documentElement.setAttribute('data-theme',savedTheme);
-    themeToggle.innerHTML=document.documentElement.getAttribute('data-theme')==='dark'
-      ?'<i class="fa-solid fa-sun"></i>'
-      :'<i class="fa-solid fa-moon"></i>';
-    themeToggle.addEventListener('click',()=>{
-      const dark=document.documentElement.getAttribute('data-theme')==='dark';
-      document.documentElement.setAttribute('data-theme',dark?'light':'dark');
-      localStorage.setItem('theme',dark?'light':'dark');
-      themeToggle.innerHTML=dark?'<i class="fa-solid fa-moon"></i>':'<i class="fa-solid fa-sun"></i>';
-    });
+  setTimeout(()=>{
+    document.getElementById('greetingText').textContent=getGreeting();
+    document.getElementById('greetingName').textContent=name;
+    document.getElementById('navName').textContent=name;
 
-    function renderPagination(total){
-      const pages=Math.ceil(total/perPage);
-      const el=document.getElementById('pagination');
-      if(pages<=1){el.innerHTML='';return}
-      const range=[];
-      const left=Math.max(2,currentPage-1);
-      const right=Math.min(pages-1,currentPage+1);
-      range.push(1);
-      if(left>2)range.push('...');
-      for(let i=left;i<=right;i++)range.push(i);
-      if(right<pages-1)range.push('...');
-      range.push(pages);
-      el.innerHTML='';
-      const prev=document.createElement('button');
-      prev.className='page-btn';
-      prev.textContent='‹';
-      prev.disabled=currentPage===1;
-      prev.onclick=()=>{if(currentPage>1){currentPage--;renderProducts();window.scrollTo({top:document.getElementById('catalog').offsetTop-70,behavior:'smooth'})}};
-      el.appendChild(prev);
-      range.forEach(item=>{
-        if(item==='...'){
-          const s=document.createElement('span');
-          s.className='page-ellipsis';
-          s.textContent='...';
-          el.appendChild(s);
-        }else{
-          const b=document.createElement('button');
-          b.className='page-btn'+(item===currentPage?' active':'');
-          b.textContent=item;
-          b.onclick=()=>{currentPage=item;renderProducts();window.scrollTo({top:document.getElementById('catalog').offsetTop-70,behavior:'smooth'})};
-          el.appendChild(b);
-        }
-      });
-      const next=document.createElement('button');
-      next.className='page-btn';
-      next.textContent='›';
-      next.disabled=currentPage===pages;
-      next.onclick=()=>{if(currentPage<pages){currentPage++;renderProducts();window.scrollTo({top:document.getElementById('catalog').offsetTop-70,behavior:'smooth'})}};
-      el.appendChild(next);
-    }
+    document.getElementById('welcome-screen').style.display='none';
+    document.getElementById('main-app').style.display='block';
 
-    function renderProducts(){
-      const grid=document.getElementById('productsGrid');
-      const start=(currentPage-1)*perPage;
-      const chunk=products.slice(start,start+perPage);
-      grid.innerHTML=chunk.map((p,idx)=>`
-        <article class="card product-card" data-index="${start+idx}">
-          <div class="badge">${p.badge}</div>
-          <div class="product-media">
-            <img class="main-img" src="${p.images[0]}" alt="${p.name}">
-          </div>
-          <div class="thumbs">
-            ${p.images.map((src,i)=>`<img class="thumb ${i===0?'active':''}" src="${src}" alt="${p.name} ${i+1}">`).join('')}
-          </div>
-          <div class="product-body">
-            <h3>${p.name}</h3>
-            <div class="price-row"><span class="price">${p.price} €</span><span class="old-price">${p.oldPrice} €</span></div>
-            <div class="meta">
-              <span><i class="fa-solid fa-bicycle"></i>${p.type}</span>
-              <span class="stars"><i class="fa-solid fa-star"></i> ${p.rating}</span>
-            </div>
-            <div class="specs">
-              <div><span>Taille</span><strong>${p.size}</strong></div>
-              <div><span>Vitesses</span><strong>${p.speeds}</strong></div>
-              <div><span>Freins</span><strong>${p.brakes}</strong></div>
-              <div><span>État</span><strong>${p.state}</strong></div>
-            </div>
-            <div class="actions">
-              <a href="#contact" class="btn btn-primary"><i class="fa-brands fa-whatsapp"></i> Acheter</a>
-              <button class="btn btn-outline details-btn">Détails</button>
-            </div>
-          </div>
-        </article>
-      `).join('');
-      grid.querySelectorAll('.thumb').forEach(img=>img.addEventListener('click',e=>{
-        const card=e.target.closest('.product-card');
-        card.querySelector('.main-img').src=e.target.src;
-        card.querySelectorAll('.thumb').forEach(x=>x.classList.remove('active'));
-        e.target.classList.add('active');
-      }));
-      grid.querySelectorAll('.details-btn').forEach(btn=>btn.addEventListener('click',()=>openDetails(products[Number(btn.closest('.product-card').dataset.index)])));
-      renderPagination(products.length);
-    }
+    overlay.classList.remove('active');
 
-    function openDetails(data){
-      modalTitle.textContent=data.name;
-      modalBody.innerHTML=`
-        <div class="detail-top">
-          <div class="detail-images">
-            <img class="big" id="detailMainImg" src="${data.images[0]}" alt="${data.name}">
-            <div class="detail-thumbs" id="detailThumbs">
-              ${data.images.map((src,i)=>`<img class="${i===0?'active':''}" src="${src}" alt="${data.name} ${i+1}">`).join('')}
-            </div>
-          </div>
-          <div class="detail-card">
-            <h3>${data.name}</h3>
-            <div class="price-row"><span class="price">${data.price} €</span><span class="old-price">${data.oldPrice} €</span></div>
-            <p>${data.compare}</p>
-            <div class="info-list">
-              <div class="info-item"><span>Type</span><strong>${data.type}</strong></div>
-              <div class="info-item"><span>Taille</span><strong>${data.size}</strong></div>
-              <div class="info-item"><span>Vitesses</span><strong>${data.speeds}</strong></div>
-              <div class="info-item"><span>Freins</span><strong>${data.brakes}</strong></div>
-              <div class="info-item"><span>État</span><strong>${data.state}</strong></div>
-              <div class="info-item"><span>Poids</span><strong>${data.weight}</strong></div>
-              <div class="info-item"><span>Pneus</span><strong>${data.tires}</strong></div>
-              <div class="info-item"><span>Utilisation idéale</span><strong>${data.use}</strong></div>
-            </div>
-          </div>
-        </div>
-        <div class="cols-2">
-          <div class="box"><h4>Avantages</h4><ul>${data.pros.map(x=>`<li>${x}</li>`).join('')}</ul></div>
-          <div class="box"><h4>Inconvénients</h4><ul>${data.cons.map(x=>`<li>${x}</li>`).join('')}</ul></div>
-        </div>
-        <div class="cols-2">
-          <div class="box"><h4>Comparaison rapide</h4><p style="color:var(--muted)">${data.compare}</p></div>
-          <div class="box"><h4>Vélos proches</h4><ul>${data.suggestions.map(x=>`<li>${x}</li>`).join('')}</ul></div>
-        </div>
-      `;
-      modal.classList.add('show');
-      document.body.classList.add('menu-open');
-      const imgs=modal.querySelectorAll('#detailThumbs img');
-      const main=modal.querySelector('#detailMainImg');
-      imgs.forEach((img,i)=>img.addEventListener('click',()=>{
-        imgs.forEach(x=>x.classList.remove('active'));
-        img.classList.add('active');
-        main.src=data.images[i];
-      }));
-    }
+    setTimeout(()=>showToast('🎉 أهلاً ' + name + '، مرحباً بك في PLUS SMM!'),400);
+  },400);
+}
 
-    function closeDetails(){
-      modal.classList.remove('show');
-      document.body.classList.remove('menu-open');
-    }
-    closeModal.addEventListener('click',closeDetails);
-    modal.addEventListener('click',e=>{if(e.target===modal)closeDetails()});
-    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetails()});
-
-    function sizeFromHeight(h,t){
-      if(t==='Route'){
-        if(h<155)return'XXS 44-46 cm';
-        if(h<165)return'XS 47-49 cm';
-        if(h<170)return'S 50-52 cm';
-        if(h<180)return'M 53-55 cm';
-        if(h<188)return'L 56-58 cm';
-        return'XL 59-61 cm';
-      }
-      if(t==='MTB'){
-        if(h<155)return'XS 13-14';
-        if(h<165)return'S 15-16';
-        if(h<175)return'M 17-18';
-        if(h<185)return'L 19-20';
-        return'XL 21-22';
-      }
-      return h<165?'S':h<180?'M':'L';
-    }
-    function wheelFromType(t){
-      return t==='Route'?'700C':t==='MTB'?'27.5 ou 29':t==='Ville'?'28':'28';
-    }
-    function speedsFromProfile(age,weight,use){
-      if(use==='Vitesse'||use==='Sport')return age<18?'18-20 vitesses':'20-24 vitesses';
-      if(use==='Montagne')return weight>90?'10-12 vitesses':'11-12 vitesses';
-      return '7-10 vitesses';
-    }
-    function bikeTypeFromUse(use){
-      if(use==='Montagne')return'MTB';
-      if(use==='Ville')return'Ville';
-      if(use==='Vitesse'||use==='Sport')return'Route';
-      return'Ville';
-    }
-
-    document.getElementById('recommendBtn').addEventListener('click',()=>{
-      const h=Number(document.getElementById('height').value||0);
-      const w=Number(document.getElementById('weight').value||0);
-      const age=Number(document.getElementById('age').value||0);
-      const use=document.getElementById('useType').value;
-      if(!h||!w||!age){showToast('Veuillez remplir la taille, le poids et l’âge.');return}
-      const type=bikeTypeFromUse(use);
-      const frame=sizeFromHeight(h,type);
-      const wheel=wheelFromType(type);
-      const speed=speedsFromProfile(age,w,use);
-      document.getElementById('resultText').textContent=`Recommandation personnalisée: vélo ${type}, cadre ${frame}, roues ${wheel}, vitesses ${speed}.`;
-      document.getElementById('recFrame').textContent=frame;
-      document.getElementById('recType').textContent=type;
-      document.getElementById('recWheel').textContent=wheel;
-      document.getElementById('recSpeed').textContent=speed;
-      showToast('Recommandation générée avec succès');
-    });
-
-    renderProducts();
-  </script>
-</body>
-</html>
+document.getElementById('nameInput').addEventListener('keydown',function(e){
+  if(e.key==='Enter') enterApp();
+});
+</script>
