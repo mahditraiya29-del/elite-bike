@@ -1,0 +1,381 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#D32F2F;--red2:#B71C1C;
+  --dark:#111;--dark2:#1a1a1a;--dark3:#222;--dark4:#2a2a2a;
+  --gray:#888;--light:#ccc;--white:#fff;
+}
+body{font-family:'Cairo',sans-serif;direction:rtl}
+.app{width:380px;min-height:100vh;background:var(--dark);font-family:'Cairo',sans-serif;overflow:hidden;}
+
+/* WELCOME SCREEN */
+#welcome-screen{
+  width:100%;min-height:100vh;
+  background:var(--dark);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:40px 30px;
+  position:relative;
+}
+.welcome-logo-area{text-align:center;margin-bottom:32px;}
+.welcome-logo-ring{
+  width:90px;height:90px;border-radius:50%;
+  border:3px solid var(--red);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 16px;
+  background:radial-gradient(circle,#2d0000,#111);
+  position:relative;
+}
+.welcome-logo-ring::before{
+  content:'';position:absolute;inset:-6px;border-radius:50%;
+  border:1px solid rgba(211,47,47,0.3);
+}
+.welcome-logo-icon{font-size:38px;color:var(--red);}
+.welcome-brand{font-size:28px;font-weight:900;color:#fff;letter-spacing:2px;}
+.welcome-brand span{color:var(--red);}
+.welcome-tagline{font-size:13px;color:var(--gray);margin-top:4px;letter-spacing:1px;}
+
+.welcome-msg{
+  background:var(--dark3);
+  border:1px solid #2e2e2e;
+  border-right:3px solid var(--red);
+  border-radius:14px;
+  padding:18px 20px;
+  width:100%;
+  margin-bottom:28px;
+  text-align:right;
+}
+.welcome-msg p{color:var(--light);font-size:14px;line-height:1.8;}
+.welcome-msg p strong{color:var(--red);}
+
+.name-label{
+  font-size:13px;color:var(--gray);
+  align-self:flex-start;margin-bottom:8px;width:100%;text-align:right;
+}
+.name-input-wrap{width:100%;position:relative;margin-bottom:20px;}
+.name-input{
+  width:100%;background:var(--dark3);
+  border:1px solid #333;border-radius:14px;
+  padding:14px 18px;font-size:16px;
+  color:#fff;font-family:'Cairo',sans-serif;
+  text-align:right;outline:none;
+  transition:border 0.2s;
+}
+.name-input:focus{border-color:var(--red);}
+.name-input::placeholder{color:#555;}
+
+.enter-btn{
+  width:100%;background:var(--red);
+  border:none;border-radius:14px;
+  padding:15px;font-size:17px;font-weight:700;
+  color:#fff;font-family:'Cairo',sans-serif;
+  cursor:pointer;
+  transition:background 0.2s,transform 0.1s;
+  letter-spacing:1px;
+}
+.enter-btn:hover{background:var(--red2);}
+.enter-btn:active{transform:scale(0.98);}
+
+/* MAIN APP */
+#main-app{display:none;width:100%;}
+
+.top-banner{
+  background:linear-gradient(135deg,#1a0000,#2d0000,#1a0000);
+  border-bottom:2px solid var(--red);
+  padding:10px 16px 8px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.brand-name{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px;}
+.brand-plus{color:var(--red);font-size:22px;}
+.brand-tag{
+  font-size:10px;color:var(--red);
+  border:1px solid var(--red);padding:2px 8px;
+  border-radius:12px;font-weight:600;letter-spacing:1px;
+}
+.status-bar{
+  background:var(--dark);padding:6px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:12px;color:var(--light);
+}
+.status-time{font-weight:700;font-size:14px;color:#fff;}
+.status-user{
+  background:var(--red);color:#fff;
+  padding:2px 10px;border-radius:20px;
+  font-size:11px;font-weight:700;
+  display:flex;align-items:center;gap:4px;
+}
+.header{padding:14px 16px 0;display:flex;justify-content:space-between;align-items:flex-start;}
+.header-icons{display:flex;gap:10px;}
+.icon-btn{
+  width:42px;height:42px;background:var(--dark3);
+  border-radius:12px;display:flex;align-items:center;justify-content:center;
+  color:var(--light);font-size:20px;border:1px solid #333;
+}
+.greeting-block{text-align:right;}
+.greeting-text{font-size:22px;font-weight:700;color:#fff;line-height:1.2;}
+.greeting-name{font-size:15px;color:var(--gray);}
+
+.card-section{padding:16px 16px 0;}
+.main-card{
+  background:var(--red);border-radius:20px;
+  padding:20px 22px;position:relative;overflow:hidden;min-height:130px;
+}
+.main-card::before{content:'';position:absolute;bottom:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(0,0,0,0.15);}
+.main-card::after{content:'';position:absolute;top:-30px;left:40px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.07);}
+.card-logo{font-size:18px;font-weight:900;color:#fff;margin-bottom:4px;display:flex;align-items:center;gap:6px;}
+.card-logo-icon{width:30px;height:30px;background:rgba(255,255,255,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.card-label{font-size:12px;color:rgba(255,255,255,0.8);text-align:left;position:absolute;top:20px;left:22px;}
+.card-balance{font-size:13px;color:rgba(255,255,255,0.9);text-align:left;position:absolute;top:36px;left:22px;}
+.card-dots{font-size:18px;color:#fff;letter-spacing:3px;text-align:left;position:absolute;top:56px;left:22px;}
+.card-eye{position:absolute;bottom:18px;left:22px;color:rgba(255,255,255,0.7);font-size:20px;}
+.dot-indicators{display:flex;gap:6px;justify-content:center;margin-top:12px;}
+.dot{width:8px;height:8px;border-radius:50%;background:#444;}
+.dot.active{background:var(--red);width:20px;border-radius:4px;}
+
+.promo-banner{
+  margin:16px 16px 0;background:var(--dark3);
+  border-radius:16px;overflow:hidden;position:relative;
+  height:72px;border:1px solid #333;
+}
+.promo-players{position:absolute;left:0;bottom:0;width:140px;height:72px;background:linear-gradient(135deg,#8B0000,#cc0000);display:flex;align-items:center;justify-content:center;font-size:28px;}
+.promo-text{position:absolute;right:16px;top:50%;transform:translateY(-50%);text-align:right;}
+.promo-title{color:var(--red);font-size:14px;font-weight:700;}
+.promo-sub{color:#fff;font-size:13px;font-weight:600;}
+.promo-badge{position:absolute;top:8px;left:150px;background:#FFD700;color:#000;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;}
+
+.services-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:16px 16px 100px;}
+.svc-btn{
+  background:var(--dark3);border-radius:14px;
+  padding:14px 8px;display:flex;flex-direction:column;
+  align-items:center;gap:8px;border:1px solid #2e2e2e;
+  cursor:pointer;position:relative;
+  animation:fadeUp 0.4s ease both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.svc-icon{width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:var(--dark4);border-radius:10px;font-size:18px;color:var(--light);}
+.svc-label{font-size:11px;color:var(--light);text-align:center;font-weight:600;line-height:1.3;}
+.new-badge{position:absolute;top:6px;right:6px;background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:8px;}
+
+.bottom-nav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:380px;background:var(--dark2);
+  border-top:1px solid #2e2e2e;
+  display:flex;align-items:center;padding:8px 0 12px;
+}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--gray);font-size:10px;cursor:pointer;}
+.nav-item i{font-size:22px;}
+.nav-item.active{color:var(--red);}
+.nav-fab{width:52px;height:52px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;margin-top:-20px;border:3px solid var(--dark);flex-shrink:0;}
+
+/* TOAST */
+#toast{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);
+  background:var(--red);color:#fff;padding:12px 24px;
+  border-radius:30px;font-family:'Cairo',sans-serif;font-size:14px;
+  font-weight:700;z-index:999;transition:transform 0.4s ease;
+  white-space:nowrap;
+}
+#toast.show{transform:translateX(-50%) translateY(0);}
+
+/* TRANSITION OVERLAY */
+#overlay{
+  position:fixed;inset:0;background:#111;
+  z-index:500;opacity:0;pointer-events:none;
+  transition:opacity 0.4s;
+}
+#overlay.active{opacity:1;pointer-events:all;}
+</style>
+
+<div style="display:flex;justify-content:center;background:#000;min-height:100vh;">
+<div class="app" id="root">
+
+  <!-- WELCOME -->
+  <div id="welcome-screen">
+    <div class="welcome-logo-area">
+      <div class="welcome-logo-ring">
+        <i class="ti ti-wallet welcome-logo-icon" aria-hidden="true"></i>
+      </div>
+      <div class="welcome-brand"><span>PLUS</span> SMM</div>
+      <div class="welcome-tagline">منصة الدفع الذكي</div>
+    </div>
+
+    <div class="welcome-msg">
+      <p>👋 مرحباً بك في <strong>PLUS SMM</strong></p>
+      <p style="margin-top:8px;font-size:13px;color:#aaa;">منصتك المتكاملة للمدفوعات والتحويلات المالية. أدخل اسمك للمتابعة.</p>
+    </div>
+
+    <div class="name-label">اسمك الكريم</div>
+    <div class="name-input-wrap">
+      <input class="name-input" id="nameInput" type="text" placeholder="أدخل اسمك هنا..." maxlength="20" />
+    </div>
+    <button class="enter-btn" onclick="enterApp()">
+      ادخل إلى PLUS SMM ←
+    </button>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="main-app">
+    <div class="top-banner">
+      <div class="brand-tag">SMM PANEL</div>
+      <div class="brand-name"><span class="brand-plus">PLUS</span> SMM</div>
+    </div>
+    <div class="status-bar">
+      <div style="display:flex;gap:6px;align-items:center;font-size:12px;">
+        <span>38</span>
+        <i class="ti ti-wifi" aria-hidden="true"></i>
+        <i class="ti ti-bluetooth" aria-hidden="true"></i>
+      </div>
+      <div class="status-time">11:20</div>
+      <div class="status-user"><i class="ti ti-user" style="font-size:12px"></i><span id="navName"></span></div>
+    </div>
+
+    <div class="header">
+      <div class="header-icons">
+        <div class="icon-btn"><i class="ti ti-robot" aria-hidden="true"></i></div>
+        <div class="icon-btn"><i class="ti ti-bell" aria-hidden="true"></i></div>
+      </div>
+      <div class="greeting-block">
+        <div class="greeting-text" id="greetingText">مساء الخير</div>
+        <div class="greeting-name" id="greetingName"></div>
+      </div>
+    </div>
+
+    <div class="card-section">
+      <div class="main-card">
+        <div class="card-logo">
+          <div class="card-logo-icon"><i class="ti ti-wallet" style="color:#fff;font-size:14px"></i></div>
+          PLUS SMM
+        </div>
+        <div class="card-label">حساب</div>
+        <div class="card-balance">ريال يمني</div>
+        <div class="card-dots">••••</div>
+        <div class="card-eye"><i class="ti ti-eye-off" aria-hidden="true"></i></div>
+      </div>
+      <div class="dot-indicators">
+        <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+    </div>
+
+    <div class="promo-banner">
+      <div class="promo-players">⚽🏆</div>
+      <div class="promo-text">
+        <div class="promo-title">المونديال</div>
+        <div class="promo-sub">مع PLUS SMM</div>
+      </div>
+      <div class="promo-badge">جديد</div>
+    </div>
+
+    <div class="services-grid" id="servicesGrid">
+      <div class="svc-btn" style="animation-delay:0.05s">
+        <div class="svc-icon"><i class="ti ti-transfer" aria-hidden="true"></i></div>
+        <div class="svc-label">تحويلات مالية</div>
+      </div>
+      <div class="svc-btn" style="animation-delay:0.1s">
+        <div class="svc-icon"><i class="ti ti-building-bank" aria-hidden="true"></i></div>
+        <div class="svc-label">حوالات محلية</div>
+      </div>
+      <div class="svc-btn" style="animation-delay:0.15s">
+        <div class="svc-icon"><i class="ti ti-device-mobile-charging" aria-hidden="true"></i></div>
+        <div class="svc-label">الشحن والسداد</div>
+      </div>
+      <div class="svc-btn" style="animation-delay:0.2s">
+        <div class="svc-icon"><i class="ti ti-shopping-bag" aria-hidden="true"></i></div>
+        <div class="svc-label">شراء اونلاين</div>
+      </div>
+      <div class="svc-btn" style="animation-delay:0.25s">
+        <div class="svc-icon"><i class="ti ti-credit-card" aria-hidden="true"></i></div>
+        <div class="svc-label">دفع المشتريات</div>
+      </div>
+      <div class="svc-btn" style="animation-delay:0.3s">
+        <div class="svc-icon"><i class="ti ti-cash" aria-hidden="true"></i></div>
+        <div class="svc-label">سحب نقدي</div>
+      </div>
+      <div class="svc-btn" style="animation-delay:0.35s">
+        <div class="svc-icon"><i class="ti ti-receipt" aria-hidden="true"></i></div>
+        <div class="svc-label">المدفوعات</div>
+      </div>
+      <div class="svc-btn" style="animation-delay:0.4s">
+        <div class="svc-icon"><i class="ti ti-device-gamepad" aria-hidden="true"></i></div>
+        <div class="svc-label">خدمات ترفيهية</div>
+      </div>
+      <div class="svc-btn" style="animation-delay:0.45s">
+        <div class="new-badge">جديد</div>
+        <div class="svc-icon"><i class="ti ti-shield" aria-hidden="true"></i></div>
+        <div class="svc-label">جيبي</div>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <div class="nav-item">
+        <i class="ti ti-user" aria-hidden="true"></i><span>الملف</span>
+      </div>
+      <div class="nav-item">
+        <i class="ti ti-chart-bar" aria-hidden="true"></i><span>التقارير</span>
+      </div>
+      <div class="nav-fab"><i class="ti ti-chevrons-up" aria-hidden="true"></i></div>
+      <div class="nav-item">
+        <i class="ti ti-layout-grid" aria-hidden="true"></i><span>الخدمات</span>
+      </div>
+      <div class="nav-item active">
+        <i class="ti ti-home" aria-hidden="true"></i><span>الرئيسية</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<div id="overlay"></div>
+<div id="toast"></div>
+
+<script>
+function getGreeting(){
+  const h=new Date().getHours();
+  if(h>=5&&h<12) return 'صباح الخير';
+  if(h>=12&&h<17) return 'مساء الخير';
+  if(h>=17&&h<21) return 'مساء النور';
+  return 'مرحباً';
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+function enterApp(){
+  const name=document.getElementById('nameInput').value.trim();
+  if(!name){
+    document.getElementById('nameInput').style.borderColor='#D32F2F';
+    document.getElementById('nameInput').placeholder='من فضلك أدخل اسمك!';
+    setTimeout(()=>{
+      document.getElementById('nameInput').style.borderColor='#333';
+      document.getElementById('nameInput').placeholder='أدخل اسمك هنا...';
+    },1500);
+    return;
+  }
+
+  const overlay=document.getElementById('overlay');
+  overlay.classList.add('active');
+
+  setTimeout(()=>{
+    document.getElementById('greetingText').textContent=getGreeting();
+    document.getElementById('greetingName').textContent=name;
+    document.getElementById('navName').textContent=name;
+
+    document.getElementById('welcome-screen').style.display='none';
+    document.getElementById('main-app').style.display='block';
+
+    overlay.classList.remove('active');
+
+    setTimeout(()=>showToast('🎉 أهلاً ' + name + '، مرحباً بك في PLUS SMM!'),400);
+  },400);
+}
+
+document.getElementById('nameInput').addEventListener('keydown',function(e){
+  if(e.key==='Enter') enterApp();
+});
+</script>
