@@ -1,414 +1,808 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>PLUS SMM</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLUS SMM | مدونة تعريفية شاملة عن بوت خدمات SMM</title>
+<meta name="description" content="مدونة تعريفية تشرح بوت PLUS SMM: خدمات الرشق لجميع منصات التواصل الاجتماعي، شحن الألعاب، الأرقام الوهمية، وواجهة API للبائعين.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;font-family:'Cairo',sans-serif;direction:rtl;background:#000;}
 :root{
-  --red:#D32F2F;--red2:#B71C1C;
-  --dark:#111;--dark2:#1a1a1a;--dark3:#222;--dark4:#2a2a2a;
-  --gray:#888;--light:#ccc;--white:#fff;
-  --max:480px;
+  --bg:#0c0c0e;
+  --bg-soft:#141417;
+  --card:#1a1a1e;
+  --card-border:#2a2a30;
+  --red:#e8132c;
+  --red-deep:#a50d20;
+  --red-glow:rgba(232,19,44,.35);
+  --white:#f5f5f7;
+  --gray:#9a9aa3;
+  --gray-dim:#6c6c75;
+  --green-acc:#1fae5f;
+  --radius:18px;
+  --font-display:'Cairo', 'Tajawal', sans-serif;
+  --font-body:'Tajawal', 'Cairo', sans-serif;
 }
-.shell{
-  width:100%;min-height:100vh;
-  display:flex;justify-content:center;align-items:flex-start;
-  background:#000;
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:var(--font-body);
+  line-height:1.8;
+  overflow-x:hidden;
 }
-.app{
-  width:100%;max-width:var(--max);
-  min-height:100vh;background:var(--dark);
-  font-family:'Cairo',sans-serif;
-  position:relative;
+body.light{
+  --bg:#f6f6f8;
+  --bg-soft:#ffffff;
+  --card:#ffffff;
+  --card-border:#e6e6ea;
+  --white:#15151a;
+  --gray:#55555f;
+  --gray-dim:#84848c;
+}
+a{color:inherit; text-decoration:none;}
+img{max-width:100%; display:block;}
+.container{max-width:1180px; margin:0 auto; padding:0 22px;}
+section{padding:90px 0;}
+h1,h2,h3,h4{font-family:var(--font-display); font-weight:800;}
+::selection{background:var(--red); color:#fff;}
+
+/* background texture */
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background:
+    radial-gradient(circle at 15% 10%, var(--red-glow), transparent 35%),
+    radial-gradient(circle at 90% 80%, rgba(31,174,95,.12), transparent 40%);
+  pointer-events:none; z-index:0;
 }
 
-/* ── WELCOME ── */
-#welcome-screen{
-  width:100%;min-height:100vh;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:clamp(24px,6vw,60px) clamp(20px,5vw,48px);
+/* ===== HEADER ===== */
+header{
+  position:sticky; top:0; z-index:50;
+  background:rgba(12,12,14,.85);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--card-border);
 }
-.welcome-logo-ring{
-  width:clamp(70px,18vw,100px);height:clamp(70px,18vw,100px);
-  border-radius:50%;border:3px solid var(--red);
-  display:flex;align-items:center;justify-content:center;
-  margin:0 auto 14px;
-  background:radial-gradient(circle,#2d0000,#111);
-  position:relative;
+body.light header{background:rgba(255,255,255,.85);}
+.nav-wrap{display:flex; align-items:center; justify-content:space-between; padding:16px 22px; max-width:1180px; margin:0 auto;}
+.logo{display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:900; font-size:22px;}
+.logo span{color:var(--red);}
+.logo .mark{
+  width:38px; height:38px; border-radius:10px;
+  background:linear-gradient(135deg, var(--red), var(--red-deep));
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; color:#fff; box-shadow:0 6px 18px var(--red-glow);
 }
-.welcome-logo-ring::before{
-  content:'';position:absolute;inset:-6px;border-radius:50%;
-  border:1px solid rgba(211,47,47,0.3);
+nav ul{display:flex; gap:28px; list-style:none;}
+nav ul li a{font-weight:600; font-size:15px; color:var(--gray); transition:.25s;}
+nav ul li a:hover{color:var(--red);}
+.nav-actions{display:flex; align-items:center; gap:14px;}
+.theme-toggle{
+  width:42px; height:42px; border-radius:50%; border:1px solid var(--card-border);
+  background:var(--card); display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--gray);
 }
-.welcome-logo-icon{font-size:clamp(28px,8vw,42px);color:var(--red);}
-.welcome-brand{font-size:clamp(22px,6vw,32px);font-weight:900;color:#fff;letter-spacing:2px;text-align:center;}
-.welcome-brand span{color:var(--red);}
-.welcome-tagline{font-size:clamp(11px,3vw,14px);color:var(--gray);margin-top:4px;letter-spacing:1px;text-align:center;}
-.welcome-logo-area{text-align:center;margin-bottom:clamp(20px,5vw,36px);}
-.welcome-msg{
-  background:var(--dark3);border:1px solid #2e2e2e;
-  border-right:3px solid var(--red);border-radius:14px;
-  padding:clamp(14px,4vw,22px) clamp(16px,4vw,24px);
-  width:100%;margin-bottom:clamp(18px,4vw,28px);text-align:right;
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:12px 26px; border-radius:50px; font-weight:700; font-size:14.5px;
+  cursor:pointer; border:none; transition:.25s;
 }
-.welcome-msg p{color:var(--light);font-size:clamp(13px,3.5vw,16px);line-height:1.8;}
-.welcome-msg p strong{color:var(--red);}
-.welcome-msg .sub{margin-top:8px;font-size:clamp(11px,3vw,14px);color:#aaa;}
-.name-label{font-size:clamp(12px,3vw,14px);color:var(--gray);align-self:flex-start;margin-bottom:8px;width:100%;text-align:right;}
-.name-input{
-  width:100%;background:var(--dark3);border:1px solid #333;
-  border-radius:14px;padding:clamp(12px,3vw,16px) 18px;
-  font-size:clamp(14px,4vw,17px);color:#fff;
-  font-family:'Cairo',sans-serif;text-align:right;outline:none;
-  transition:border 0.2s;margin-bottom:clamp(14px,3vw,20px);display:block;
-}
-.name-input:focus{border-color:var(--red);}
-.name-input::placeholder{color:#555;}
-.enter-btn{
-  width:100%;background:var(--red);border:none;border-radius:14px;
-  padding:clamp(12px,3.5vw,16px);font-size:clamp(14px,4vw,18px);
-  font-weight:700;color:#fff;font-family:'Cairo',sans-serif;
-  cursor:pointer;transition:background 0.2s,transform 0.1s;letter-spacing:1px;
-}
-.enter-btn:hover{background:var(--red2);}
-.enter-btn:active{transform:scale(0.98);}
+.btn-primary{background:linear-gradient(135deg, var(--red), var(--red-deep)); color:#fff; box-shadow:0 8px 20px var(--red-glow);}
+.btn-primary:hover{transform:translateY(-2px); box-shadow:0 12px 26px var(--red-glow);}
+.btn-ghost{background:transparent; border:1px solid var(--card-border); color:var(--white);}
+.btn-ghost:hover{border-color:var(--red); color:var(--red);}
+.menu-toggle{display:none; font-size:22px; background:none; border:none; color:var(--white); cursor:pointer;}
 
-/* ── MAIN APP ── */
-#main-app{display:none;width:100%;padding-bottom:80px;}
-.top-banner{
-  background:linear-gradient(135deg,#1a0000,#2d0000,#1a0000);
-  border-bottom:2px solid var(--red);
-  padding:clamp(8px,2vw,12px) clamp(14px,4vw,20px);
-  display:flex;align-items:center;justify-content:space-between;
+/* ===== HERO ===== */
+.hero{position:relative; padding:70px 0 50px; z-index:1;}
+.hero-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:50px; align-items:center;}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--card); border:1px solid var(--card-border); color:var(--red);
+  padding:8px 16px; border-radius:50px; font-size:13px; font-weight:700; margin-bottom:22px;
 }
-.brand-name{font-size:clamp(16px,4.5vw,22px);font-weight:900;color:#fff;letter-spacing:1px;}
-.brand-plus{color:var(--red);}
-.brand-tag{
-  font-size:clamp(9px,2.5vw,11px);color:var(--red);
-  border:1px solid var(--red);padding:2px clamp(6px,2vw,10px);
-  border-radius:12px;font-weight:600;letter-spacing:1px;
+.eyebrow i{font-size:11px;}
+.hero h1{font-size:50px; line-height:1.25; margin-bottom:18px;}
+.hero h1 .accent{color:var(--red);}
+.hero p.lead{color:var(--gray); font-size:18px; max-width:560px; margin-bottom:32px;}
+.hero-actions{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:40px;}
+.hero-stats{display:flex; gap:34px; flex-wrap:wrap;}
+.hero-stats .stat b{display:block; font-family:var(--font-display); font-size:26px; color:var(--white);}
+.hero-stats .stat span{color:var(--gray-dim); font-size:13px;}
+
+.hero-card{
+  position:relative; background:var(--card); border:1px solid var(--card-border);
+  border-radius:24px; padding:26px; box-shadow:0 30px 60px -20px rgba(0,0,0,.6);
 }
-.status-bar{
-  background:var(--dark);padding:6px clamp(14px,4vw,20px);
-  display:flex;align-items:center;justify-content:space-between;
-  font-size:clamp(11px,3vw,13px);color:var(--light);
+body.light .hero-card{box-shadow:0 30px 60px -20px rgba(0,0,0,.15);}
+.hero-card .top{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
+.hero-card .top .badge{background:var(--red); color:#fff; font-size:11px; padding:5px 10px; border-radius:20px; font-weight:700;}
+.hero-card .panel{
+  background:linear-gradient(135deg, var(--red), var(--red-deep));
+  border-radius:18px; padding:24px; color:#fff; position:relative; overflow:hidden; margin-bottom:18px;
 }
-.status-icons{display:flex;gap:6px;align-items:center;}
-.status-time{font-weight:700;font-size:clamp(13px,3.5vw,15px);color:#fff;}
-.status-user{
-  background:var(--red);color:#fff;
-  padding:2px clamp(8px,2.5vw,12px);border-radius:20px;
-  font-size:clamp(10px,2.8vw,12px);font-weight:700;
-  display:flex;align-items:center;gap:4px;
+.hero-card .panel::after{content:""; position:absolute; left:-30px; bottom:-40px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,.08);}
+.hero-card .panel small{opacity:.85; font-size:13px;}
+.hero-card .panel h3{font-size:20px; margin:6px 0 14px;}
+.hero-card .panel .dots{letter-spacing:4px; font-size:18px;}
+.mini-row{display:flex; gap:12px;}
+.mini{flex:1; background:var(--bg-soft); border:1px solid var(--card-border); border-radius:14px; padding:14px; text-align:center;}
+.mini i{color:var(--red); font-size:18px; margin-bottom:6px; display:block;}
+.mini span{font-size:12.5px; color:var(--gray);}
+
+/* ===== SECTION HEADERS ===== */
+.sec-head{text-align:center; max-width:680px; margin:0 auto 50px;}
+.sec-head .eyebrow{margin-bottom:14px;}
+.sec-head h2{font-size:36px; margin-bottom:14px;}
+.sec-head p{color:var(--gray); font-size:16px;}
+
+/* ===== PLATFORMS ===== */
+.platform-tabs{display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-bottom:40px;}
+.ptab{
+  padding:10px 20px; border-radius:50px; background:var(--card); border:1px solid var(--card-border);
+  cursor:pointer; font-weight:700; font-size:14px; color:var(--gray); display:flex; align-items:center; gap:8px; transition:.2s;
 }
-.header{
-  padding:clamp(12px,3vw,18px) clamp(14px,4vw,20px) 0;
-  display:flex;justify-content:space-between;align-items:flex-start;
+.ptab.active, .ptab:hover{background:var(--red); color:#fff; border-color:var(--red);}
+.platform-panels{position:relative;}
+.ppanel{display:none;}
+.ppanel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+.service-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(190px,1fr)); gap:16px;}
+.service-card{
+  background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:20px;
+  transition:.25s;
 }
-.header-icons{display:flex;gap:10px;}
-.icon-btn{
-  width:clamp(36px,10vw,46px);height:clamp(36px,10vw,46px);
-  background:var(--dark3);border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  color:var(--light);font-size:clamp(16px,5vw,22px);border:1px solid #333;
+.service-card:hover{border-color:var(--red); transform:translateY(-4px);}
+.service-card i{color:var(--red); font-size:20px; margin-bottom:10px; display:block;}
+.service-card h4{font-size:15.5px; margin-bottom:4px;}
+.service-card p{color:var(--gray-dim); font-size:13px;}
+
+/* ===== PRICING TABLE ===== */
+.price-table{background:var(--card); border:1px solid var(--card-border); border-radius:var(--radius); overflow:hidden;}
+table{width:100%; border-collapse:collapse;}
+thead th{
+  background:linear-gradient(135deg, var(--red), var(--red-deep)); color:#fff;
+  padding:16px; font-size:14.5px; text-align:center; font-weight:700;
 }
-.greeting-block{text-align:right;}
-.greeting-text{font-size:clamp(18px,5vw,24px);font-weight:700;color:#fff;line-height:1.2;}
-.greeting-name{font-size:clamp(13px,3.5vw,16px);color:var(--gray);}
-.card-section{padding:clamp(12px,3vw,18px) clamp(14px,4vw,20px) 0;}
-.main-card{
-  background:var(--red);border-radius:20px;
-  padding:clamp(16px,4vw,22px);position:relative;overflow:hidden;
-  min-height:clamp(110px,28vw,140px);
+tbody td{padding:18px 14px; text-align:center; border-top:1px solid var(--card-border); font-size:14.5px; color:var(--gray);}
+tbody tr td:first-child{font-weight:700; color:var(--white);}
+tbody tr:hover{background:var(--bg-soft);}
+.tier-tag{display:inline-block; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:700;}
+.tier-cheap{background:rgba(232,19,44,.12); color:var(--red);}
+.tier-mid{background:rgba(255,180,0,.12); color:#e0a500;}
+.tier-high{background:rgba(31,174,95,.14); color:var(--green-acc);}
+.price-note{margin-top:18px; color:var(--gray-dim); font-size:14px; text-align:center;}
+
+/* ===== GAMES ===== */
+.games-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:14px;}
+.game-card{
+  background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:18px; text-align:center; transition:.25s;
 }
-.main-card::before{content:'';position:absolute;bottom:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(0,0,0,0.15);}
-.main-card::after{content:'';position:absolute;top:-30px;left:40px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.07);}
-.card-logo{font-size:clamp(14px,4vw,18px);font-weight:900;color:#fff;margin-bottom:4px;display:flex;align-items:center;gap:6px;}
-.card-logo-icon{width:clamp(26px,7vw,32px);height:clamp(26px,7vw,32px);background:rgba(255,255,255,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;}
-.card-logo-icon i{font-size:clamp(12px,3.5vw,16px);color:#fff;}
-.card-label{font-size:clamp(10px,2.8vw,13px);color:rgba(255,255,255,0.8);text-align:left;position:absolute;top:clamp(16px,4vw,22px);left:clamp(16px,4vw,22px);}
-.card-balance{font-size:clamp(11px,3vw,14px);color:rgba(255,255,255,0.9);text-align:left;position:absolute;top:clamp(32px,8vw,42px);left:clamp(16px,4vw,22px);}
-.card-dots{font-size:clamp(14px,4vw,18px);color:#fff;letter-spacing:3px;text-align:left;position:absolute;top:clamp(50px,12vw,62px);left:clamp(16px,4vw,22px);}
-.card-eye{position:absolute;bottom:clamp(14px,4vw,20px);left:clamp(16px,4vw,22px);color:rgba(255,255,255,0.7);font-size:clamp(16px,4.5vw,22px);}
-.dot-indicators{display:flex;gap:6px;justify-content:center;margin-top:10px;}
-.dot{width:8px;height:8px;border-radius:50%;background:#444;}
-.dot.active{background:var(--red);width:20px;border-radius:4px;}
-.promo-banner{
-  margin:clamp(12px,3vw,18px) clamp(14px,4vw,20px) 0;
-  background:var(--dark3);border-radius:16px;overflow:hidden;
-  position:relative;height:clamp(60px,16vw,80px);border:1px solid #333;
+.game-card:hover{border-color:var(--green-acc); transform:translateY(-3px);}
+.game-card i{font-size:24px; color:var(--green-acc); margin-bottom:8px; display:block;}
+.game-card span{font-size:13.5px; font-weight:600;}
+
+/* ===== NUMBERS ===== */
+.numbers-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:16px;}
+.num-card{
+  background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:22px; display:flex; align-items:center; gap:14px;
 }
-.promo-players{
-  position:absolute;left:0;bottom:0;
-  width:clamp(100px,28vw,150px);height:100%;
-  background:linear-gradient(135deg,#8B0000,#cc0000);
-  display:flex;align-items:center;justify-content:center;
-  font-size:clamp(20px,6vw,30px);
+.num-card .flag{width:44px; height:44px; border-radius:10px; background:var(--bg-soft); display:flex; align-items:center; justify-content:center; font-size:20px;}
+.num-card h4{font-size:15.5px; margin-bottom:3px;}
+.num-card p{font-size:12.5px; color:var(--gray-dim);}
+
+/* ===== PAYMENTS ===== */
+.pay-row{display:flex; flex-wrap:wrap; gap:16px; justify-content:center;}
+.pay-chip{
+  display:flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--card-border);
+  padding:14px 22px; border-radius:50px; font-weight:700; font-size:14.5px;
 }
-.promo-text{position:absolute;right:clamp(12px,4vw,20px);top:50%;transform:translateY(-50%);text-align:right;}
-.promo-title{color:var(--red);font-size:clamp(12px,3.5vw,15px);font-weight:700;}
-.promo-sub{color:#fff;font-size:clamp(11px,3vw,14px);font-weight:600;}
-.promo-badge{
-  position:absolute;top:8px;left:clamp(105px,29vw,155px);
-  background:#FFD700;color:#000;
-  font-size:clamp(8px,2.2vw,10px);font-weight:700;
-  padding:2px 6px;border-radius:4px;
+.pay-chip i{color:var(--red); font-size:18px;}
+.pay-note{text-align:center; color:var(--gray-dim); margin-top:24px; font-size:14px;}
+
+/* ===== API ===== */
+.api-section{
+  background:linear-gradient(135deg, #16161a, #1c1014);
+  border:1px solid var(--card-border); border-radius:28px; padding:60px; position:relative; overflow:hidden;
 }
-.services-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:clamp(8px,2.5vw,12px);
-  padding:clamp(12px,3vw,18px) clamp(14px,4vw,20px) 0;
+.api-section::before{content:""; position:absolute; inset:0; background:radial-gradient(circle at 80% 20%, var(--red-glow), transparent 45%);}
+.api-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px; position:relative; z-index:1; align-items:center;}
+.api-list{list-style:none;}
+.api-list li{display:flex; align-items:flex-start; gap:12px; margin-bottom:16px; color:var(--gray); font-size:15px;}
+.api-list li i{color:var(--red); margin-top:4px;}
+.code-mock{
+  background:#0a0a0c; border:1px solid #2a2a30; border-radius:14px; padding:20px; font-family:monospace; font-size:13px; color:#7ee787; overflow-x:auto;
 }
-.svc-btn{
-  background:var(--dark3);border-radius:14px;
-  padding:clamp(10px,3vw,16px) clamp(6px,2vw,10px);
-  display:flex;flex-direction:column;align-items:center;gap:clamp(6px,2vw,10px);
-  border:1px solid #2e2e2e;cursor:pointer;position:relative;
-  animation:fadeUp 0.4s ease both;transition:background 0.2s;
+.code-mock .c1{color:#ff7b72;} .code-mock .c2{color:#79c0ff;} .code-mock .c3{color:#d2a8ff;}
+
+/* ===== ARTICLES ===== */
+.search-box{
+  display:flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--card-border);
+  border-radius:50px; padding:10px 20px; max-width:460px; margin:0 auto 40px;
 }
-.svc-btn:hover{background:var(--dark4);}
-@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-.svc-icon{
-  width:clamp(32px,9vw,42px);height:clamp(32px,9vw,42px);
-  display:flex;align-items:center;justify-content:center;
-  background:var(--dark4);border-radius:10px;
-  font-size:clamp(16px,4.5vw,20px);color:var(--light);
+.search-box input{flex:1; background:none; border:none; outline:none; color:var(--white); font-family:var(--font-body); font-size:14.5px;}
+.search-box i{color:var(--gray-dim);}
+.articles-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:22px;}
+.article-card{background:var(--card); border:1px solid var(--card-border); border-radius:18px; overflow:hidden; transition:.25s;}
+.article-card:hover{transform:translateY(-5px); border-color:var(--red);}
+.article-thumb{height:140px; background:linear-gradient(135deg, var(--red), var(--red-deep)); display:flex; align-items:center; justify-content:center; font-size:34px; color:rgba(255,255,255,.85);}
+.article-body{padding:20px;}
+.article-tag{font-size:11.5px; color:var(--red); font-weight:700; margin-bottom:8px; display:block;}
+.article-card h4{font-size:16.5px; margin-bottom:8px; line-height:1.5;}
+.article-card p{color:var(--gray-dim); font-size:13.5px; margin-bottom:14px;}
+.read-more{font-size:13px; font-weight:700; color:var(--white); display:flex; align-items:center; gap:6px;}
+.read-more i{font-size:11px;}
+
+/* ===== FAQ ===== */
+.faq-item{background:var(--card); border:1px solid var(--card-border); border-radius:14px; margin-bottom:12px; overflow:hidden;}
+.faq-q{padding:18px 22px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-weight:700; font-size:15px;}
+.faq-q i{color:var(--red); transition:.3s;}
+.faq-item.open .faq-q i{transform:rotate(180deg);}
+.faq-a{max-height:0; overflow:hidden; transition:max-height .35s ease;}
+.faq-a p{padding:0 22px 18px; color:var(--gray); font-size:14.5px;}
+
+/* ===== CTA STRIP ===== */
+.cta-strip{
+  background:linear-gradient(135deg, var(--red), var(--red-deep)); border-radius:28px; padding:50px;
+  text-align:center; position:relative; overflow:hidden;
 }
-.svc-label{font-size:clamp(9px,2.5vw,12px);color:var(--light);text-align:center;font-weight:600;line-height:1.3;}
-.new-badge{
-  position:absolute;top:6px;right:6px;
-  background:var(--red);color:#fff;
-  font-size:clamp(8px,2vw,10px);font-weight:700;
-  padding:1px 6px;border-radius:8px;
+.cta-strip h2{font-size:30px; color:#fff; margin-bottom:12px;}
+.cta-strip p{color:rgba(255,255,255,.85); margin-bottom:26px;}
+.cta-strip .btn-ghost{border-color:rgba(255,255,255,.5); color:#fff;}
+
+/* ===== CONTACT ===== */
+.contact-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:18px;}
+.contact-card{background:var(--card); border:1px solid var(--card-border); border-radius:18px; padding:26px; text-align:center;}
+.contact-card .ic{width:54px; height:54px; border-radius:14px; background:linear-gradient(135deg, var(--red), var(--red-deep)); display:flex; align-items:center; justify-content:center; font-size:22px; color:#fff; margin:0 auto 14px;}
+.contact-card h4{margin-bottom:6px;}
+.contact-card p{color:var(--gray-dim); font-size:13.5px; margin-bottom:14px;}
+
+/* ===== FOOTER ===== */
+footer{border-top:1px solid var(--card-border); padding:60px 0 30px; background:var(--bg-soft);}
+.foot-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:30px; margin-bottom:40px;}
+.foot-grid h5{margin-bottom:16px; font-size:15px;}
+.foot-grid ul{list-style:none;}
+.foot-grid ul li{margin-bottom:10px;}
+.foot-grid ul li a{color:var(--gray-dim); font-size:14px; transition:.2s;}
+.foot-grid ul li a:hover{color:var(--red);}
+.foot-bottom{border-top:1px solid var(--card-border); padding-top:22px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; color:var(--gray-dim); font-size:13px;}
+.social-mini{display:flex; gap:10px;}
+.social-mini a{width:36px; height:36px; border-radius:50%; background:var(--card); border:1px solid var(--card-border); display:flex; align-items:center; justify-content:center; color:var(--gray);}
+.social-mini a:hover{color:#fff; background:var(--red); border-color:var(--red);}
+
+@media(max-width:900px){
+  nav ul{display:none;}
+  .menu-toggle{display:block;}
+  .hero-grid{grid-template-columns:1fr;}
+  .api-grid{grid-template-columns:1fr;}
+  .foot-grid{grid-template-columns:1fr 1fr;}
+  .hero h1{font-size:34px;}
+  section{padding:60px 0;}
+  .api-section{padding:32px;}
+  .price-table{overflow-x:auto;}
+  table{min-width:560px;}
 }
-.bottom-nav{
-  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
-  width:min(100%,var(--max));
-  background:var(--dark2);border-top:1px solid #2e2e2e;
-  display:flex;align-items:center;
-  padding:clamp(6px,2vw,10px) 0 clamp(10px,3vw,14px);
-  z-index:100;
+
+@media(max-width:640px){
+  .container{padding:0 16px;}
+  section{padding:48px 0;}
+  .nav-wrap{padding:14px 16px;}
+  .logo{font-size:18px;}
+  .logo .mark{width:32px; height:32px; font-size:15px;}
+  .hero{padding:40px 0 30px;}
+  .hero h1{font-size:27px; line-height:1.35;}
+  .hero p.lead{font-size:15px;}
+  .hero-actions{gap:10px;}
+  .hero-actions .btn{flex:1; justify-content:center; font-size:13.5px; padding:12px 14px;}
+  .hero-stats{gap:20px;}
+  .hero-stats .stat b{font-size:21px;}
+  .hero-card{padding:18px;}
+  .sec-head h2{font-size:24px;}
+  .sec-head p{font-size:14.5px;}
+  .platform-tabs{gap:8px;}
+  .ptab{padding:8px 14px; font-size:13px;}
+  .service-grid{grid-template-columns:1fr 1fr;}
+  .games-grid{grid-template-columns:1fr 1fr;}
+  .numbers-grid{grid-template-columns:1fr;}
+  .api-section{padding:22px; border-radius:20px;}
+  .cta-strip{padding:32px 22px;}
+  .cta-strip h2{font-size:22px;}
+  .foot-grid{grid-template-columns:1fr; gap:26px;}
+  .foot-bottom{flex-direction:column; text-align:center;}
+  .pay-row{gap:10px;}
+  .pay-chip{padding:11px 16px; font-size:13px;}
+  .contact-grid{grid-template-columns:1fr;}
+  .articles-grid{grid-template-columns:1fr;}
 }
-.nav-item{
-  flex:1;display:flex;flex-direction:column;align-items:center;
-  gap:3px;color:var(--gray);font-size:clamp(9px,2.5vw,11px);cursor:pointer;
+
+@media(max-width:380px){
+  .hero h1{font-size:23px;}
+  .service-grid{grid-template-columns:1fr;}
+  .games-grid{grid-template-columns:1fr;}
+  .hero-stats{gap:14px;}
+  thead th, tbody td{padding:12px 8px; font-size:13px;}
 }
-.nav-item i{font-size:clamp(18px,5vw,24px);}
-.nav-item.active{color:var(--red);}
-.nav-fab{
-  width:clamp(44px,12vw,56px);height:clamp(44px,12vw,56px);
-  background:var(--red);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  color:#fff;font-size:clamp(18px,5vw,24px);
-  margin-top:-20px;border:3px solid var(--dark);flex-shrink:0;
+
+/* article modal */
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,.7); backdrop-filter:blur(4px);
+  display:none; align-items:flex-start; justify-content:center; z-index:200; padding:60px 16px; overflow-y:auto;
 }
-#toast{
-  position:fixed;top:16px;left:50%;
-  transform:translateX(-50%) translateY(-90px);
-  background:var(--red);color:#fff;
-  padding:clamp(10px,3vw,14px) clamp(18px,5vw,28px);
-  border-radius:30px;font-family:'Cairo',sans-serif;
-  font-size:clamp(12px,3.5vw,15px);font-weight:700;
-  z-index:999;transition:transform 0.4s ease;
-  white-space:nowrap;max-width:90vw;text-align:center;
+.modal-overlay.active{display:flex;}
+.modal-box{
+  background:var(--card); border:1px solid var(--card-border); border-radius:20px; max-width:680px; width:100%;
+  padding:34px; position:relative; animation:fadeIn .3s ease;
 }
-#toast.show{transform:translateX(-50%) translateY(0);}
-#overlay{
-  position:fixed;inset:0;background:#111;
-  z-index:500;opacity:0;pointer-events:none;transition:opacity 0.4s;
+.modal-close{
+  position:absolute; top:18px; left:18px; width:36px; height:36px; border-radius:50%;
+  background:var(--bg-soft); border:1px solid var(--card-border); color:var(--white); cursor:pointer; font-size:15px;
 }
-#overlay.active{opacity:1;pointer-events:all;}
-@media(min-width:520px){
-  .shell{align-items:center;min-height:100vh;padding:30px 0;}
-  .app{
-    border-radius:36px;
-    box-shadow:0 0 0 1px #222, 0 0 60px rgba(211,47,47,0.15);
-    min-height:auto;overflow:hidden;
-  }
-  #main-app{padding-bottom:80px;}
-  .bottom-nav{
-    position:sticky;bottom:0;
-    left:auto;transform:none;
-    border-radius:0 0 36px 36px;
-    width:100%;
-  }
+.modal-box .article-tag{margin-bottom:10px;}
+.modal-box h3{font-size:22px; margin-bottom:16px; line-height:1.5;}
+.modal-box .modal-content p{color:var(--gray); font-size:15px; margin-bottom:14px;}
+@media(max-width:640px){
+  .modal-overlay{padding:30px 12px;}
+  .modal-box{padding:24px;}
+  .modal-box h3{font-size:19px;}
 }
 </style>
 </head>
 <body>
-<div class="shell">
-<div class="app" id="root">
 
-  <!-- WELCOME SCREEN -->
-  <div id="welcome-screen">
-    <div class="welcome-logo-area">
-      <div class="welcome-logo-ring">
-        <i class="ti ti-wallet welcome-logo-icon"></i>
-      </div>
-      <div class="welcome-brand"><span>PLUS</span> SMM</div>
-      <div class="welcome-tagline">منصة الدفع الذكي</div>
+<header>
+  <div class="nav-wrap">
+    <div class="logo"><div class="mark"><i class="fa-solid fa-bolt"></i></div>PLUS<span>SMM</span></div>
+    <nav><ul>
+      <li><a href="#services">الرشق</a></li>
+      <li><a href="#pricing">الأسعار</a></li>
+      <li><a href="#games">شحن الألعاب</a></li>
+      <li><a href="#numbers">الأرقام الوهمية</a></li>
+      <li><a href="#api">API</a></li>
+      <li><a href="#articles">المقالات</a></li>
+      <li><a href="#faq">الأسئلة الشائعة</a></li>
+    </ul></nav>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="تبديل الوضع"><i class="fa-solid fa-moon"></i></button>
+      <a href="https://t.me/smmplusCh" target="_blank" class="btn btn-primary"><i class="fa-brands fa-telegram"></i> قناة التحديثات</a>
+      <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
     </div>
-    <div class="welcome-msg">
-      <p>👋 مرحباً بك في <strong>PLUS SMM</strong></p>
-      <p class="sub">منصتك المتكاملة للمدفوعات والتحويلات المالية. أدخل اسمك للمتابعة.</p>
-    </div>
-    <div class="name-label">اسمك الكريم</div>
-    <input class="name-input" id="nameInput" type="text" placeholder="أدخل اسمك هنا..." maxlength="20"/>
-    <button class="enter-btn" onclick="enterApp()">ادخل إلى PLUS SMM ←</button>
   </div>
+</header>
 
-  <!-- MAIN APP -->
-  <div id="main-app">
-    <div class="top-banner">
-      <div class="brand-tag">SMM PANEL</div>
-      <div class="brand-name"><span class="brand-plus">PLUS</span> SMM</div>
-    </div>
-    <div class="status-bar">
-      <div class="status-icons">
-        <span>38</span>
-        <i class="ti ti-wifi"></i>
-        <i class="ti ti-bluetooth"></i>
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow"><i class="fa-solid fa-circle"></i> مدونة تعريفية شاملة</div>
+      <h1>تعرّف على PLUS SMM <span class="accent">بوت</span> خدمات الرشق والتسويق الإلكتروني</h1>
+      <p class="lead">دليلك الشامل للتعرف على بوت PLUS SMM: كيف يعمل، ما الخدمات التي يوفرها لمنصات التواصل الاجتماعي، شحن الألعاب، الأرقام الوهمية، وواجهة API الخاصة بالبائعين.</p>
+      <div class="hero-actions">
+        <a href="#services" class="btn btn-primary"><i class="fa-solid fa-arrow-down"></i> استعرض الخدمات</a>
+        <a href="#articles" class="btn btn-ghost"><i class="fa-solid fa-book-open"></i> تصفح المقالات</a>
       </div>
-      <div class="status-time" id="statusTime">11:20</div>
-      <div class="status-user"><i class="ti ti-user" style="font-size:11px"></i><span id="navName"></span></div>
-    </div>
-    <div class="header">
-      <div class="header-icons">
-        <div class="icon-btn"><i class="ti ti-robot"></i></div>
-        <div class="icon-btn"><i class="ti ti-bell"></i></div>
-      </div>
-      <div class="greeting-block">
-        <div class="greeting-text" id="greetingText">مساء الخير</div>
-        <div class="greeting-name" id="greetingName"></div>
+      <div class="hero-stats">
+        <div class="stat"><b>+8</b><span>منصات مشروحة</span></div>
+        <div class="stat"><b>+11</b><span>لعبة مدعومة</span></div>
+        <div class="stat"><b>4</b><span>دول للأرقام الوهمية</span></div>
+        <div class="stat"><b>API</b><span>شرح تفصيلي</span></div>
       </div>
     </div>
-    <div class="card-section">
-      <div class="main-card">
-        <div class="card-logo">
-          <div class="card-logo-icon"><i class="ti ti-wallet"></i></div>
-          PLUS SMM
+    <div class="hero-card">
+      <div class="top"><span style="font-weight:700; color:var(--gray); font-size:14px;">عن البوت</span><span class="badge">دليل تعريفي</span></div>
+      <div class="panel">
+        <small>ما هو PLUS SMM؟</small>
+        <h3>بوت متكامل لخدمات SMM</h3>
+        <p style="font-size:13px; opacity:.9; line-height:1.7;">شرح مبسط لكل خدمة قبل استخدامها</p>
+      </div>
+      <div class="mini-row">
+        <div class="mini"><i class="fa-brands fa-instagram"></i><span>متابعين</span></div>
+        <div class="mini"><i class="fa-brands fa-tiktok"></i><span>مشاهدات</span></div>
+        <div class="mini"><i class="fa-solid fa-gamepad"></i><span>شحن ألعاب</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="sec-head">
+      <div class="eyebrow"><i class="fa-solid fa-circle"></i> خدمات الرشق</div>
+      <h2>كل منصات التواصل في مكان واحد</h2>
+      <p>تعرف على الخدمات المتوفرة لكل منصة ضمن بوت PLUS SMM.</p>
+    </div>
+    <div class="platform-tabs" id="platformTabs"></div>
+    <div class="platform-panels" id="platformPanels"></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="background:var(--bg-soft);">
+  <div class="container">
+    <div class="sec-head">
+      <div class="eyebrow"><i class="fa-solid fa-circle"></i> مقارنة الباقات</div>
+      <h2>فهم الفروقات بين الباقات</h2>
+      <p>شرح للفروقات بين الباقات من حيث السعر والسرعة والثبات والضمان.</p>
+    </div>
+    <div class="price-table">
+      <table>
+        <thead><tr><th>الباقة</th><th>السعر</th><th>السرعة</th><th>الثبات</th><th>الضمان</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tier-tag tier-cheap">رخيصة</span></td><td>الأقل سعراً</td><td>سريع</td><td>ثبات منخفض نسبياً</td><td>حتى 15 يوم</td></tr>
+          <tr><td><span class="tier-tag tier-mid">متوسطة</span></td><td>سعر متوسط</td><td>جيد</td><td>ثبات جيد</td><td>30 يوم</td></tr>
+          <tr><td><span class="tier-tag tier-high">عالية الجودة</span></td><td>أعلى سعراً</td><td>ممتاز</td><td>ثبات مرتفع جداً</td><td>حسب الخدمة</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="price-note">الخدمات الرخيصة مناسبة للتجارب والحملات السريعة، بينما الخدمات المتوسطة والعالية توفر ثباتاً أفضل وجودة أعلى.</p>
+  </div>
+</section>
+
+<!-- GAMES -->
+<section id="games">
+  <div class="container">
+    <div class="sec-head">
+      <div class="eyebrow"><i class="fa-solid fa-circle"></i> شحن الألعاب</div>
+      <h2>تعرف على خدمة شحن الألعاب</h2>
+      <p>نظرة على الألعاب المدعومة ضمن بوت PLUS SMM.</p>
+    </div>
+    <div class="games-grid" id="gamesGrid"></div>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section id="numbers" style="background:var(--bg-soft);">
+  <div class="container">
+    <div class="sec-head">
+      <div class="eyebrow"><i class="fa-solid fa-circle"></i> الأرقام الوهمية</div>
+      <h2>أرقام تفعيل مؤقتة لدول متعددة</h2>
+      <p>تعرف على الدول المدعومة لاستقبال أكواد التفعيل.</p>
+    </div>
+    <div class="numbers-grid" id="numbersGrid"></div>
+  </div>
+</section>
+
+<!-- PAYMENTS -->
+<section id="payments">
+  <div class="container">
+    <div class="sec-head">
+      <div class="eyebrow"><i class="fa-solid fa-circle"></i> طرق الدفع</div>
+      <h2>طرق الدفع المدعومة</h2>
+      <p>نظرة على وسائل الدفع التي يدعمها البوت لتفعيل الشحن التلقائي.</p>
+    </div>
+    <div class="pay-row">
+      <div class="pay-chip"><i class="fa-solid fa-coins"></i> Binance Pay</div>
+      <div class="pay-chip"><i class="fa-solid fa-dollar-sign"></i> USDT</div>
+      <div class="pay-chip"><i class="fa-solid fa-gem"></i> TON</div>
+      <div class="pay-chip"><i class="fa-brands fa-bitcoin"></i> عملات رقمية أخرى</div>
+    </div>
+    <p class="pay-note">يعتمد البوت على الشحن التلقائي فور تأكيد الدفع عبر هذه الوسائل، بدون الحاجة لتدخل بشري.</p>
+  </div>
+</section>
+
+<!-- API -->
+<section id="api" style="background:var(--bg-soft);">
+  <div class="container">
+    <div class="api-section">
+      <div class="api-grid">
+        <div>
+          <div class="eyebrow"><i class="fa-solid fa-circle"></i> للبائعين والمسوقين</div>
+          <h2 style="font-size:30px; margin-bottom:18px;">كيف يعمل API الخاص بالبائعين؟</h2>
+          <ul class="api-list">
+            <li><i class="fa-solid fa-key"></i> الحصول على مفتاح API خاص</li>
+            <li><i class="fa-solid fa-globe"></i> إمكانية إنشاء موقع رشق خاص</li>
+            <li><i class="fa-solid fa-rotate"></i> إعادة بيع الخدمات للعملاء</li>
+            <li><i class="fa-solid fa-gears"></i> إدارة الطلبات تلقائياً</li>
+            <li><i class="fa-solid fa-chart-line"></i> متابعة الأرباح بسهولة</li>
+            <li><i class="fa-solid fa-link"></i> ربط المتاجر والأنظمة الخارجية</li>
+          </ul>
+          <a href="#articles" class="btn btn-ghost"><i class="fa-solid fa-book-open"></i> اقرأ شرح API الكامل</a>
         </div>
-        <div class="card-label">حساب</div>
-        <div class="card-balance">ريال يمني</div>
-        <div class="card-dots">••••</div>
-        <div class="card-eye"><i class="ti ti-eye-off"></i></div>
+        <div class="code-mock">
+<span class="c1">POST</span> /api/v2<br>
+{<br>
+&nbsp;&nbsp;<span class="c2">"key"</span>: <span class="c3">"YOUR_API_KEY"</span>,<br>
+&nbsp;&nbsp;<span class="c2">"action"</span>: <span class="c3">"add"</span>,<br>
+&nbsp;&nbsp;<span class="c2">"service"</span>: <span class="c3">1024</span>,<br>
+&nbsp;&nbsp;<span class="c2">"link"</span>: <span class="c3">"https://instagram.com/..."</span>,<br>
+&nbsp;&nbsp;<span class="c2">"quantity"</span>: <span class="c3">1000</span><br>
+}
+        </div>
       </div>
-      <div class="dot-indicators">
-        <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
-      </div>
-    </div>
-    <div class="promo-banner">
-      <div class="promo-players">⚽🏆</div>
-      <div class="promo-text">
-        <div class="promo-title">المونديال</div>
-        <div class="promo-sub">مع PLUS SMM</div>
-      </div>
-      <div class="promo-badge">جديد</div>
-    </div>
-    <div class="services-grid">
-      <div class="svc-btn" style="animation-delay:.05s">
-        <div class="svc-icon"><i class="ti ti-transfer"></i></div>
-        <div class="svc-label">تحويلات مالية</div>
-      </div>
-      <div class="svc-btn" style="animation-delay:.1s">
-        <div class="svc-icon"><i class="ti ti-building-bank"></i></div>
-        <div class="svc-label">حوالات محلية</div>
-      </div>
-      <div class="svc-btn" style="animation-delay:.15s">
-        <div class="svc-icon"><i class="ti ti-device-mobile-charging"></i></div>
-        <div class="svc-label">الشحن والسداد</div>
-      </div>
-      <div class="svc-btn" style="animation-delay:.2s">
-        <div class="svc-icon"><i class="ti ti-shopping-bag"></i></div>
-        <div class="svc-label">شراء اونلاين</div>
-      </div>
-      <div class="svc-btn" style="animation-delay:.25s">
-        <div class="svc-icon"><i class="ti ti-credit-card"></i></div>
-        <div class="svc-label">دفع المشتريات</div>
-      </div>
-      <div class="svc-btn" style="animation-delay:.3s">
-        <div class="svc-icon"><i class="ti ti-cash"></i></div>
-        <div class="svc-label">سحب نقدي</div>
-      </div>
-      <div class="svc-btn" style="animation-delay:.35s">
-        <div class="svc-icon"><i class="ti ti-receipt"></i></div>
-        <div class="svc-label">المدفوعات</div>
-      </div>
-      <div class="svc-btn" style="animation-delay:.4s">
-        <div class="svc-icon"><i class="ti ti-device-gamepad"></i></div>
-        <div class="svc-label">خدمات ترفيهية</div>
-      </div>
-      <div class="svc-btn" style="animation-delay:.45s">
-        <div class="new-badge">جديد</div>
-        <div class="svc-icon"><i class="ti ti-shield"></i></div>
-        <div class="svc-label">جيبي</div>
-      </div>
-    </div>
-    <div class="bottom-nav">
-      <div class="nav-item"><i class="ti ti-user"></i><span>الملف</span></div>
-      <div class="nav-item"><i class="ti ti-chart-bar"></i><span>التقارير</span></div>
-      <div class="nav-fab"><i class="ti ti-chevrons-up"></i></div>
-      <div class="nav-item"><i class="ti ti-layout-grid"></i><span>الخدمات</span></div>
-      <div class="nav-item active"><i class="ti ti-home"></i><span>الرئيسية</span></div>
     </div>
   </div>
+</section>
 
-</div>
-</div>
+<!-- ARTICLES -->
+<section id="articles">
+  <div class="container">
+    <div class="sec-head">
+      <div class="eyebrow"><i class="fa-solid fa-circle"></i> مدونة PLUS SMM</div>
+      <h2>مقالات ونصائح في عالم SMM</h2>
+      <p>تعلّم كل ما يخص خدمات الرشق وإعادة البيع والربح من API.</p>
+    </div>
+    <div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="articleSearch" placeholder="ابحث في المقالات..."></div>
+    <div class="articles-grid" id="articlesGrid"></div>
+  </div>
+</section>
 
-<div id="overlay"></div>
-<div id="toast"></div>
+<!-- CTA -->
+<section>
+  <div class="container">
+    <div class="cta-strip">
+      <h2>تابع آخر المستجدات</h2>
+      <p>انضم إلى قناة التحديثات لمتابعة كل جديد حول خدمات PLUS SMM.</p>
+      <a href="https://t.me/smmplusCh" target="_blank" class="btn btn-ghost"><i class="fa-brands fa-telegram"></i> انضم لقناة التحديثات</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background:var(--bg-soft);">
+  <div class="container">
+    <div class="sec-head">
+      <div class="eyebrow"><i class="fa-solid fa-circle"></i> الأسئلة الشائعة</div>
+      <h2>كل ما تحتاج معرفته</h2>
+    </div>
+    <div id="faqList" style="max-width:760px; margin:0 auto;"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="sec-head">
+      <div class="eyebrow"><i class="fa-solid fa-circle"></i> تواصل معنا</div>
+      <h2>نحن هنا لمساعدتك</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="ic"><i class="fa-brands fa-telegram"></i></div>
+        <h4>للاستفسارات</h4>
+        <p>تواصل عبر تيليجرام لأي استفسار حول الشرح</p>
+        <a href="https://t.me/Haamadh" target="_blank" class="btn btn-ghost" style="padding:10px 20px; font-size:13px;">Haamadh@</a>
+      </div>
+      <div class="contact-card">
+        <div class="ic"><i class="fa-solid fa-bullhorn"></i></div>
+        <h4>قناة التحديثات</h4>
+        <p>تابع أحدث العروض والتحديثات أولاً بأول</p>
+        <a href="https://t.me/smmplusCh" target="_blank" class="btn btn-ghost" style="padding:10px 20px; font-size:13px;">انضم الآن</a>
+      </div>
+      <div class="contact-card">
+        <div class="ic"><i class="fa-solid fa-shield-halved"></i></div>
+        <h4>سياسة الخصوصية</h4>
+        <p>بياناتك بأمان معنا دائماً</p>
+        <a href="#" class="btn btn-ghost" style="padding:10px 20px; font-size:13px;">عرض السياسة</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="logo" style="margin-bottom:14px;"><div class="mark"><i class="fa-solid fa-bolt"></i></div>PLUS<span>SMM</span></div>
+        <p style="color:var(--gray-dim); font-size:14px; max-width:280px;">مدونة تعريفية تشرح خدمات بوت PLUS SMM: الرشق، شحن الألعاب، الأرقام الوهمية، وواجهة API.</p>
+        <div class="social-mini" style="margin-top:18px;">
+          <a href="https://t.me/Haamadh" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+          <a href="https://t.me/smmplusCh" target="_blank"><i class="fa-solid fa-bullhorn"></i></a>
+        </div>
+      </div>
+      <div>
+        <h5>الخدمات</h5>
+        <ul>
+          <li><a href="#services">الرشق الاجتماعي</a></li>
+          <li><a href="#games">شحن الألعاب</a></li>
+          <li><a href="#numbers">الأرقام الوهمية</a></li>
+          <li><a href="#api">API للبائعين</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>الشركة</h5>
+        <ul>
+          <li><a href="#articles">المدونة</a></li>
+          <li><a href="#faq">الأسئلة الشائعة</a></li>
+          <li><a href="#">سياسة الخصوصية</a></li>
+          <li><a href="#contact">تواصل معنا</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>الدفع</h5>
+        <ul>
+          <li><a href="#">Binance Pay</a></li>
+          <li><a href="#">USDT</a></li>
+          <li><a href="#">TON</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 PLUS SMM. جميع الحقوق محفوظة.</span>
+      <span>صُنع بـ <i class="fa-solid fa-heart" style="color:var(--red);"></i> لمجتمع المسوقين العرب</span>
+    </div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="articleModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeArticle()"><i class="fa-solid fa-xmark"></i></button>
+    <span class="article-tag" id="modalTag"></span>
+    <h3 id="modalTitle"></h3>
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+</div>
 
 <script>
-function getGreeting(){
-  const h=new Date().getHours();
-  if(h>=5&&h<12)return'صباح الخير';
-  if(h>=12&&h<17)return'مساء الخير';
-  if(h>=17&&h<21)return'مساء النور';
-  return'مرحباً';
+/* ---------- Theme toggle ---------- */
+const themeBtn = document.getElementById('themeToggle');
+themeBtn.addEventListener('click', ()=>{
+  document.body.classList.toggle('light');
+  themeBtn.innerHTML = document.body.classList.contains('light') ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+});
+
+/* ---------- Platforms & services data ---------- */
+const platforms = [
+  {id:'instagram', name:'Instagram', icon:'fa-brands fa-instagram', intro:'يوفر بوت PLUS SMM مجموعة متنوعة من خدمات إنستغرام، تساعد على بناء حضور أقوى للحساب من خلال زيادة التفاعل والظهور.', services:['متابعين Followers','لايكات Likes','مشاهدات Views','تعليقات Comments','حفظ Saves','مشاركة Shares','اكسبلور Explore']},
+  {id:'tiktok', name:'TikTok', icon:'fa-brands fa-tiktok', intro:'بفضل انتشار تيك توك الواسع، يقدم البوت خدمات مخصصة لزيادة التفاعل على الفيديوهات والبث المباشر.', services:['متابعين Followers','لايكات Likes','مشاهدات Views','تعليقات Comments','مشاركة Shares','بث مباشر Live Views']},
+  {id:'youtube', name:'YouTube', icon:'fa-brands fa-youtube', intro:'خدمات يوتيوب موجهة لأصحاب القنوات الراغبين بتحسين معدلات المشاهدة والاشتراك بشكل تدريجي وآمن.', services:['مشتركين Subscribers','لايكات Likes','مشاهدات Views','تعليقات Comments','بث مباشر Live Views']},
+  {id:'facebook', name:'Facebook', icon:'fa-brands fa-facebook', intro:'تشمل خدمات فيسبوك دعم الصفحات والمجموعات الشخصية لتعزيز الظهور والتفاعل العام.', services:['متابعين Followers','لايكات Likes','مشاهدات Views','تعليقات Comments','مشاركة Shares','أعضاء مجموعات']},
+  {id:'x', name:'X (Twitter)', icon:'fa-brands fa-x-twitter', intro:'خدمات منصة X تساعد على رفع نسبة التفاعل مع التغريدات واستطلاعات الرأي بشكل ملحوظ.', services:['متابعين Followers','لايكات Likes','مشاهدات Views','إعادة تغريد','تعليقات Comments','تصويت Poll Votes']},
+  {id:'telegram', name:'Telegram', icon:'fa-brands fa-telegram', intro:'مخصصة لأصحاب القنوات والمجموعات الراغبين بزيادة عدد الأعضاء ونسبة المشاهدات على المنشورات.', services:['أعضاء قنوات','أعضاء مجموعات','مشاهدات منشورات','تصويت Poll Votes']},
+  {id:'whatsapp', name:'WhatsApp', icon:'fa-brands fa-whatsapp', intro:'مع دعم واتساب لميزة القنوات، يوفر البوت خدمات لتعزيز عدد المتابعين والتفاعل مع الحالات.', services:['أعضاء قنوات','مشاهدات الحالة','تفاعل القنوات']},
+  {id:'threads', name:'Threads', icon:'fa-brands fa-threads', intro:'خدمات مخصصة لمنصة Threads الناشئة، لمساعدة الحسابات على النمو منذ البداية.', services:['متابعين Followers','لايكات Likes','تعليقات Comments','مشاركة Shares']},
+];
+const tabsEl = document.getElementById('platformTabs');
+const panelsEl = document.getElementById('platformPanels');
+platforms.forEach((p,i)=>{
+  const tab = document.createElement('div');
+  tab.className = 'ptab' + (i===0?' active':'');
+  tab.innerHTML = `<i class="${p.icon}"></i> ${p.name}`;
+  tab.onclick = ()=>{
+    document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.ppanel').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-'+p.id).classList.add('active');
+  };
+  tabsEl.appendChild(tab);
+
+  const panel = document.createElement('div');
+  panel.className = 'ppanel' + (i===0?' active':'');
+  panel.id = 'panel-'+p.id;
+  panel.innerHTML = `<p style="color:var(--gray); font-size:14.5px; max-width:680px; margin-bottom:22px;">${p.intro}</p><div class="service-grid">${p.services.map(s=>`
+    <div class="service-card"><i class="fa-solid fa-bolt"></i><h4>${s}</h4><p>خدمة متوفرة ضمن منصة ${p.name}</p></div>
+  `).join('')}</div>`;
+  panelsEl.appendChild(panel);
+});
+
+/* ---------- Games ---------- */
+const games = ['PUBG Mobile','PUBG New State','Free Fire','Free Fire PIN','Clash Of Clans','Mobile Legends','Brawl Stars','Lords Mobile','Genshin Impact','Fortnite','Roblox'];
+document.getElementById('gamesGrid').innerHTML = games.map(g=>`
+  <div class="game-card"><i class="fa-solid fa-gamepad"></i><span>${g}</span></div>
+`).join('');
+
+/* ---------- Numbers ---------- */
+const numbers = [
+  {c:'السعودية', flag:'🇸🇦'},
+  {c:'اليمن', flag:'🇾🇪'},
+  {c:'إندونيسيا', flag:'🇮🇩'},
+  {c:'الولايات المتحدة', flag:'🇺🇸'},
+];
+document.getElementById('numbersGrid').innerHTML = numbers.map(n=>`
+  <div class="num-card"><div class="flag">${n.flag}</div><div><h4>${n.c}</h4><p>أرقام تفعيل مؤقتة لاستقبال الأكواد</p></div></div>
+`).join('');
+
+/* ---------- Articles ---------- */
+const articles = [
+  {tag:'إنستغرام', icon:'fa-brands fa-instagram', title:'كيفية زيادة متابعين إنستغرام بفعالية', desc:'خطوات عملية لزيادة متابعينك بشكل آمن ومستدام.', content:[
+    'تعتبر زيادة عدد المتابعين على إنستغرام من أهم أهداف أصحاب الحسابات الشخصية والتجارية على حد سواء، إذ يعكس عدد المتابعين مدى مصداقية الحساب وقدرته على الوصول لجمهور أوسع.',
+    'يعتمد بوت PLUS SMM على آليات تدريجية لإضافة المتابعين، بحيث يحافظ على شكل طبيعي للنمو بدلاً من القفزات المفاجئة التي قد تلفت انتباه أنظمة المنصة.',
+    'من المهم دائماً موازنة عدد المتابعين مع مستوى التفاعل الفعلي على المنشورات، فحساب يملك متابعين كثر بدون تفاعل قد يفقد مصداقيته أمام الجمهور.',
+    'لذلك ينصح غالباً بالجمع بين خدمات المتابعين وخدمات التفاعل مثل اللايكات والتعليقات للحصول على نتيجة متوازنة وواقعية.'
+  ]},
+  {tag:'تيك توك', icon:'fa-brands fa-tiktok', title:'أفضل خدمات تيك توك لعام 2026', desc:'مقارنة شاملة لأفضل خدمات تيك توك المتوفرة.', content:[
+    'شهدت منصة تيك توك نمواً هائلاً في عدد المستخدمين، ما جعل المنافسة على الظهور في صفحة "لك" أكثر صعوبة من أي وقت مضى.',
+    'تساعد خدمات المشاهدات والتفاعل على إعطاء الفيديو دفعة أولية، وهو ما قد يزيد من فرصة وصوله لجمهور أوسع عبر خوارزمية المنصة.',
+    'تختلف فعالية الخدمات حسب جودة المحتوى نفسه، فالخدمة وحدها لا تعوض عن فيديو غير جذاب، لكنها تمنحه فرصة أكبر للظهور أمام عدد أكبر من المستخدمين.',
+    'يفضل اختيار خدمات تراعي التوزيع الجغرافي والتدرج الزمني لتبدو طبيعية قدر الإمكان.'
+  ]},
+  {tag:'يوتيوب', icon:'fa-brands fa-youtube', title:'طرق تحسين ظهور فيديوهاتك على يوتيوب', desc:'نصائح لتحسين الظهور وزيادة نسبة المشاهدة.', content:[
+    'يعتمد ظهور الفيديوهات على يوتيوب على مجموعة عوامل متشابكة، من بينها مدة المشاهدة، ونسبة النقر، وحجم التفاعل الأولي بعد النشر.',
+    'يمكن لخدمات المشاهدات والتعليقات أن تساهم في تحسين هذه المؤشرات في الساعات الأولى من النشر، وهي فترة حساسة تؤثر على قرار الخوارزمية بترويج الفيديو أو لا.',
+    'إلى جانب الخدمات، يبقى عنوان الفيديو والصورة المصغرة ووصفه من العوامل الأساسية التي يجب الاهتمام بها بالتوازي.',
+    'الجمع بين محتوى جيد وخدمات داعمة يمنح القناة فرصة أفضل للنمو على المدى الطويل.'
+  ]},
+  {tag:'دليل', icon:'fa-solid fa-scale-balanced', title:'الفرق بين الخدمات الرخيصة والعالية الجودة', desc:'تعرف على الفروقات الجوهرية بين الباقات المختلفة.', content:[
+    'تختلف خدمات الرشق فيما بينها من حيث السرعة والثبات والسعر، وهو ما ينعكس مباشرة على جودة النتيجة النهائية.',
+    'الخدمات الرخيصة عادة ما تكون أسرع في التنفيذ، لكنها أقل ثباتاً على المدى الطويل، وغالباً ما يصاحبها فترة ضمان قصيرة نسبياً.',
+    'في المقابل، توفر الخدمات متوسطة وعالية الجودة ثباتاً أكبر وضماناً أطول، مما يجعلها خياراً أنسب للحسابات التي تتطلب نمواً مستقراً.',
+    'الاختيار بين الفئتين يعتمد على طبيعة الهدف: حملة تجريبية قصيرة، أو نمو طويل الأمد لحساب جاد.'
+  ]},
+  {tag:'الربح', icon:'fa-solid fa-sack-dollar', title:'كيف تربح من إعادة بيع خدمات SMM', desc:'دليلك الكامل لبدء مشروع ربحي في عالم SMM.', content:[
+    'يعتبر مجال إعادة بيع خدمات SMM من المجالات الرقمية التي يمكن البدء فيها برأس مال بسيط، اعتماداً على واجهة API توفرها منصات مثل PLUS SMM.',
+    'تقوم الفكرة على شراء الخدمات بالجملة من خلال المفتاح الخاص بك، ثم إعادة بيعها للعملاء بأسعار وهوامش ربح تحددها أنت.',
+    'يحتاج هذا النوع من المشاريع إلى موقع أو واجهة خاصة بك، يمكن ربطها مباشرة بـ API لإدارة الطلبات تلقائياً دون تدخل يدوي.',
+    'النجاح في هذا المجال يعتمد على دراسة السوق المستهدف، وتقديم أسعار تنافسية، إضافة إلى دعم فني جيد للعملاء.'
+  ]},
+  {tag:'API', icon:'fa-solid fa-code', title:'كيفية استخدام API الخاص بـ PLUS SMM', desc:'شرح تفصيلي لربط API بموقعك أو متجرك.', content:[
+    'تتيح واجهة API الخاصة بـ PLUS SMM للمطورين وأصحاب المشاريع ربط أنظمتهم الخاصة مباشرة بقاعدة الخدمات المتوفرة.',
+    'بعد الحصول على مفتاح API، يمكن إرسال الطلبات برمجياً وتحديد الخدمة والرابط والكمية المطلوبة، ليتم تنفيذها تلقائياً دون أي تدخل يدوي.',
+    'تدعم الواجهة أيضاً متابعة حالة الطلبات والرصيد بشكل لحظي، مما يسهل بناء لوحة تحكم متكاملة لإدارة العملاء والطلبات.',
+    'هذا النوع من التكامل هو الأساس الذي تُبنى عليه معظم مواقع إعادة بيع خدمات SMM المنتشرة حالياً.'
+  ]},
+];
+const artGrid = document.getElementById('articlesGrid');
+function renderArticles(list){
+  artGrid.innerHTML = list.map((a,i)=>`
+    <div class="article-card">
+      <div class="article-thumb"><i class="${a.icon}"></i></div>
+      <div class="article-body">
+        <span class="article-tag">${a.tag}</span>
+        <h4>${a.title}</h4>
+        <p>${a.desc}</p>
+        <span class="read-more" style="cursor:pointer;" onclick="openArticle('${a.title.replace(/'/g, "\\'")}')">اقرأ المزيد <i class="fa-solid fa-arrow-left"></i></span>
+      </div>
+    </div>
+  `).join('');
 }
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3200);
+renderArticles(articles);
+document.getElementById('articleSearch').addEventListener('input', e=>{
+  const q = e.target.value.trim().toLowerCase();
+  renderArticles(articles.filter(a => a.title.toLowerCase().includes(q) || a.tag.toLowerCase().includes(q)));
+});
+
+function openArticle(title){
+  const a = articles.find(x=>x.title===title);
+  if(!a) return;
+  document.getElementById('modalTag').textContent = a.tag;
+  document.getElementById('modalTitle').textContent = a.title;
+  document.getElementById('modalContent').innerHTML = a.content.map(p=>`<p>${p}</p>`).join('');
+  document.getElementById('articleModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
-function enterApp(){
-  const name=document.getElementById('nameInput').value.trim();
-  if(!name){
-    const inp=document.getElementById('nameInput');
-    inp.style.borderColor='#D32F2F';
-    inp.placeholder='من فضلك أدخل اسمك!';
-    setTimeout(()=>{inp.style.borderColor='#333';inp.placeholder='أدخل اسمك هنا...';},1500);
-    return;
-  }
-  const ov=document.getElementById('overlay');
-  ov.classList.add('active');
-  setTimeout(()=>{
-    document.getElementById('greetingText').textContent=getGreeting();
-    document.getElementById('greetingName').textContent=name;
-    document.getElementById('navName').textContent=name;
-    document.getElementById('welcome-screen').style.display='none';
-    document.getElementById('main-app').style.display='block';
-    ov.classList.remove('active');
-    setTimeout(()=>showToast('🎉 أهلاً '+name+'، مرحباً بك في PLUS SMM!'),400);
-  },400);
+function closeArticle(){
+  document.getElementById('articleModal').classList.remove('active');
+  document.body.style.overflow = '';
 }
-document.getElementById('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')enterApp();});
-function updateTime(){
-  const now=new Date();
-  const h=String(now.getHours()).padStart(2,'0');
-  const m=String(now.getMinutes()).padStart(2,'0');
-  const el=document.getElementById('statusTime');
-  if(el)el.textContent=h+':'+m;
+document.getElementById('articleModal').addEventListener('click', e=>{
+  if(e.target.id === 'articleModal') closeArticle();
+});
+
+/* ---------- FAQ ---------- */
+const faqs = [
+  {q:'كم تستغرق مدة تنفيذ الطلبات؟', a:'تختلف المدة حسب نوع الخدمة والباقة المختارة، وتبدأ الخدمات السريعة فور الدفع مباشرة.'},
+  {q:'هل الشحن تلقائي بالكامل؟', a:'نعم، يتم تفعيل رصيدك تلقائياً فور تأكيد الدفع عبر Binance Pay أو USDT أو TON.'},
+  {q:'هل يمكنني إنشاء موقع رشق خاص بي؟', a:'بالتأكيد، عبر الحصول على مفتاح API يمكنك بناء موقعك الخاص وإعادة بيع الخدمات لعملائك.'},
+  {q:'ما الفرق بين الباقات الثلاث؟', a:'تختلف الباقات في السعر والسرعة والثبات، فكلما ارتفعت الجودة زاد الثبات والضمان.'},
+  {q:'كيف أتواصل مع الدعم الفني؟', a:'يمكنك التواصل المباشر مع الأدمن عبر تيليجرام على المعرف Haamadh@.'},
+];
+const faqList = document.getElementById('faqList');
+faqList.innerHTML = faqs.map((f,i)=>`
+  <div class="faq-item" id="faq-${i}">
+    <div class="faq-q" onclick="toggleFaq(${i})"><span>${f.q}</span><i class="fa-solid fa-chevron-down"></i></div>
+    <div class="faq-a"><p>${f.a}</p></div>
+  </div>
+`).join('');
+function toggleFaq(i){
+  const item = document.getElementById('faq-'+i);
+  const ans = item.querySelector('.faq-a');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(el=>{el.classList.remove('open'); el.querySelector('.faq-a').style.maxHeight=null;});
+  if(!isOpen){ item.classList.add('open'); ans.style.maxHeight = ans.scrollHeight + 'px'; }
 }
-updateTime();
-setInterval(updateTime,1000);
+
+/* ---------- Mobile menu ---------- */
+document.getElementById('menuToggle').addEventListener('click', ()=>{
+  const nav = document.querySelector('nav ul');
+  nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+  nav.style.flexDirection = 'column';
+  nav.style.position='fixed'; nav.style.top='70px'; nav.style.insetInlineEnd='20px';
+  nav.style.background='var(--card)'; nav.style.border='1px solid var(--card-border)';
+  nav.style.borderRadius='16px'; nav.style.padding='16px 24px'; nav.style.zIndex='60';
+});
 </script>
 </body>
 </html>
